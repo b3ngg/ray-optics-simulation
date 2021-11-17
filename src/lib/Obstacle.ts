@@ -23,7 +23,7 @@ export interface LineObstacle extends BaseObstacle {
 
 export const getIntersection = (obstacle: Obstacle, ray: Ray): Pt => {
 	const { type } = obstacle;
-	const rayPts = [ray.origin, ray.direction];
+	const rayPts = Line.fromAngle(ray.origin, ray.angle, 1);
 
 	if (type === 'circle')
 		return Circle.intersectRay2D(Circle.fromCenter(obstacle.center, obstacle.radius), rayPts)[1];

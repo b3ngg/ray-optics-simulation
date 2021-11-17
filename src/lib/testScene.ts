@@ -1,6 +1,6 @@
 import type { Scene } from '$types/scene';
 import type { Ray } from './Ray';
-import {  Pt } from 'pts';
+import { Pt } from 'pts';
 import { mirror } from './Material';
 import { createWorld } from './World';
 import { events } from './EventManager';
@@ -25,7 +25,7 @@ export const testScene: Scene = (space) => {
 
 		const startRay: Ray = {
 			origin: new Pt(600, 100),
-			direction: space.pointer
+			angle: space.pointer.$subtract(new Pt(600, 100)).angle()
 		};
 
 		const lines = world.traceRay(startRay);

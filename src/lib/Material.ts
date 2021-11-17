@@ -8,7 +8,7 @@ export interface Material {
 }
 
 const reflectRayOnLine = (incidentRay: Ray, line: LineObstacle, collisionPoint: Pt): Ray => {
-	const d = incidentRay.direction.$subtract(incidentRay.origin).$unit();
+	const d = new Pt(1, 0).toAngle(incidentRay.angle);
 	const normalAngle = line.start.$subtract(line.end).angle() + Math.PI / 2;
 	const lineNormal = new Pt(0, 1).toAngle(normalAngle).$unit();
 
@@ -19,7 +19,7 @@ const reflectRayOnLine = (incidentRay: Ray, line: LineObstacle, collisionPoint: 
 	const reflection = Vec.subtract(d, Vec.multiply(lineNormal, perpendicular));
 	const r = new Pt(reflection);
 
-	return { origin: collisionPoint, direction: collisionPoint.$add(r) };
+	return { origin: collisionPoint, angle: r.angle() };
 };
 
 export const mirror: Material = {
