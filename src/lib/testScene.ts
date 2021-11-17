@@ -1,6 +1,6 @@
 import type { Scene } from '$types/scene';
 import type { Ray } from './Ray';
-import { Circle, Pt } from 'pts';
+import {  Pt } from 'pts';
 import { mirror } from './Material';
 import { createWorld } from './World';
 import { events } from './EventManager';
@@ -21,11 +21,7 @@ export const testScene: Scene = (space) => {
 
 	space.add(() => {
 		// Draw obstacles
-		world.getObstacles().forEach((obstacle) => {
-			if (obstacle.type === 'circle')
-				return form.fill('#fff').circle(Circle.fromCenter(obstacle.center, obstacle.radius));
-			if (obstacle.type === 'line') return form.fill('#fff').line([obstacle.start, obstacle.end]);
-		});
+		world.drawObstacles(form);
 
 		const startRay: Ray = {
 			origin: new Pt(600, 100),

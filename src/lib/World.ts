@@ -1,12 +1,13 @@
-import type { Pt, PtIterable } from 'pts';
+import type { PtIterable, CanvasForm } from 'pts';
 import type { Ray } from './Ray';
 import type { Obstacle } from './Obstacle';
+import { Circle, Pt } from 'pts';
 import { getIntersection } from './Obstacle';
 
 export interface World {
 	add: (obstacle: Obstacle) => void;
-	getObstacles: () => Obstacle[];
 	traceRay: (ray: Ray) => PtIterable[];
+	drawObstacles: (form: CanvasForm) => void;
 }
 
 export const createWorld = (): World => {
@@ -58,7 +59,13 @@ export const createWorld = (): World => {
 		add: (obstacle) => {
 			obstacles.push(obstacle);
 		},
-		getObstacles: () => obstacles,
-		traceRay
+		traceRay,
+		drawObstacles: (form) => {
+			obstacles.forEach((obstacle) => {
+				if (obstacle.type === 'circle')
+					return form.fill('#fff').circle(Circle.fromCenter(obstacle.center, obstacle.radius));
+				if (obstacle.type === 'line') return form.fill('#fff').line([obstacle.start, obstacle.end]);
+			});
+		}
 	};
 };
