@@ -1,4 +1,5 @@
-import type { PtIterable, CanvasForm } from 'pts';
+import { CanvasForm, Line } from 'pts';
+import type { PtIterable } from 'pts';
 import type { Ray } from './Ray';
 import type { Obstacle } from './Obstacle';
 import { Circle, Pt } from 'pts';
@@ -40,7 +41,8 @@ export const createWorld = (): World => {
 			);
 
 		// Exit if no collision is found
-		if (sortedCollisions.length === 0) return lines;
+		if (sortedCollisions.length === 0)
+			return [...lines, Line.fromAngle(currentRay.origin, currentRay.angle, 2000)];
 
 		const [collision, obstacle] = sortedCollisions[0];
 
