@@ -6,7 +6,7 @@ import { Circle, Pt } from 'pts';
 import { getIntersection } from './Obstacle';
 import { events } from './EventManager';
 import { MAX_TRACE_DEPTH, MAX_TRACE_LENGTH } from './const';
-import { fDistance } from './geometry';
+import { fDistance, getPointsOnCurve } from './geometry';
 
 export interface World {
 	add: (obstacle: Obstacle) => void;
@@ -69,6 +69,10 @@ export const createWorld = (): World => {
 				if (obstacle.type === 'circle')
 					return form.fill('#fff').circle(Circle.fromCenter(obstacle.center, obstacle.radius));
 				if (obstacle.type === 'line') return form.fill('#fff').line([obstacle.start, obstacle.end]);
+				if (obstacle.type === 'curve')
+					return form
+						.strokeOnly('#fff')
+						.line(getPointsOnCurve(obstacle.start, obstacle.f, obstacle.scale));
 			});
 		}
 	};

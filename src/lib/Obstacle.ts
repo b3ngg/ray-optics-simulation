@@ -1,12 +1,13 @@
 import { Circle, Line, Pt } from 'pts';
 import { MAX_TRACE_LENGTH } from './const';
+import type { LinearFunction } from './geometry';
 import type { Material } from './Material';
 import type { Ray } from './Ray';
 
-export type Obstacle = CircleObstacle | LineObstacle;
+export type Obstacle = CircleObstacle | LineObstacle | CurveObstacle;
 
 export interface BaseObstacle {
-	type: 'circle' | 'line' | 'polygon' | 'curve';
+	type: 'circle' | 'line' | 'curve';
 	material?: Material;
 }
 
@@ -20,6 +21,13 @@ export interface LineObstacle extends BaseObstacle {
 	type: 'line';
 	start: Pt;
 	end: Pt;
+}
+
+export interface CurveObstacle extends BaseObstacle {
+	type: 'curve';
+	start: Pt;
+	f: LinearFunction;
+	scale: number;
 }
 
 export const getIntersection = (obstacle: Obstacle, ray: Ray): Pt => {
