@@ -1,16 +1,7 @@
-import type { Obstacle } from './Obstacle';
-import type { Ray } from './Ray';
-import { Pt, Vec } from 'pts';
 import type { PtIterable } from 'pts';
-
-export interface Material {
-	handleCollision: (
-		incomingRay: Ray,
-		obstacle: Obstacle,
-		collisionPoint: Pt,
-		line?: PtIterable
-	) => Ray[];
-}
+import type { Material } from '$types/Material';
+import type { Ray } from '$types/Ray';
+import { Pt, Vec } from 'pts';
 
 const reflectRayOnLine = (incidentRay: Ray, line: PtIterable, collisionPoint: Pt): Ray => {
 	const d = new Pt(1, 0).toAngle(incidentRay.angle);
@@ -30,18 +21,18 @@ const getLineNormal = (line: PtIterable): Pt => {
 };
 
 export const mirror: Material = {
-	handleCollision: (incidentRay, obstacle, collisionPoint, line) => {
+	handleCollision: (intersection, collider, incoming, obstacle) => {
 		if (obstacle.type === 'line') {
-			return [reflectRayOnLine(incidentRay, [obstacle.start, obstacle.end], collisionPoint)];
+			return [reflectRayOnLine(incoming, collider, intersection)];
 		}
 
 		if (obstacle.type === 'circle') {
-			const perpendicularAngle = collisionPoint.$subtract(obstacle.center).angle();
-			return [{ origin: collisionPoint, angle: perpendicularAngle }];
+			const perpendicularAngle = intersection.$subtract(obstacle.start).angle();
+			return [{ origin: intersection, angle: perpendicularAngle }];
 		}
 
 		if (obstacle.type === 'curve') {
-			return [reflectRayOnLine(incidentRay, line, collisionPoint)];
+			return [reflectRayOnLine(incoming, collider, intersection)];
 		}
 
 		return [];

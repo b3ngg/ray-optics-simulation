@@ -1,7 +1,4 @@
-export interface EventManager {
-	on: (id: string, cb: (data: unknown) => void) => void;
-	trigger: (id: string, data: unknown) => void;
-}
+import type { EventManager } from '$types/EventManager';
 
 export const createEventManager = (): EventManager => {
 	const callbacks = new Map<string, Set<(data: unknown) => void>>();

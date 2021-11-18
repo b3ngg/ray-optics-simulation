@@ -1,18 +1,11 @@
-import { CanvasForm, Line } from 'pts';
 import type { PtIterable } from 'pts';
-import type { Ray } from './Ray';
-import { getIntersections } from './Obstacle';
-import type { Obstacle } from './Obstacle';
-import { Circle, Pt } from 'pts';
+import type { IntersectionReturn, Obstacle } from '$types/Obstacle';
+import type { World } from '$types/World';
+import type { Ray } from '$types/Ray';
+import { MAX_TRACE_DEPTH } from './const';
+import { fDistance } from './geometry';
+import { rayToPts } from './Ray';
 import { events } from './EventManager';
-import { MAX_TRACE_DEPTH, MAX_TRACE_LENGTH } from './const';
-import { fDistance, getPointsOnCurve } from './geometry';
-
-export interface World {
-	add: (obstacle: Obstacle) => void;
-	traceRay: (ray: Ray) => PtIterable[];
-	drawObstacles: (form: CanvasForm) => void;
-}
 
 export const createWorld = (): World => {
 	const obstacles: Obstacle[] = [];
@@ -21,44 +14,46 @@ export const createWorld = (): World => {
 		if (depth >= MAX_TRACE_DEPTH) return lines;
 
 		// Test collision with every obstacle
-		const rawCollisions: [[Pt, PtIterable][], Obstacle][] = obstacles.map((currentObstacle) => {
-			return [getIntersections(currentObstacle, currentRay), currentObstacle];
-		});
-		const allCollisions: [[Pt, PtIterable], Obstacle][] = rawCollisions.flatMap(([cs, o]) =>
-			cs.map((c) => [c, o])
-		);
+		const rawCollisions: [IntersectionReturn, Obstacle][] = obstacles.map((currentObstacle) => [
+			currentObstacle.getRayIntersections(rayToPts(currentRay)),
+			currentObstacle
+		]);
+		const allCollisions: (IntersectionReturn[0] & { obstacle: Obstacle })[] = rawCollisions
+			.filter(([collisions]) => collisions.length > 0)
+			.flatMap(([intersectionReturns, obstacle]) =>
+				intersectionReturns.map((c) => ({ ...c, obstacle }))
+			);
 
 		allCollisions.forEach((c) => events.trigger('collision', c));
 
 		// Filter and sort collision depending on the distance to the ray origin
 		const sortedCollisions = allCollisions
-			.filter((c) => c[0] !== undefined)
-			.filter(([[collision], obstacle]) => {
+			.filter(({ intersection, obstacle }) => {
 				return (
-					collision &&
+					intersection &&
 					// Obstacle needs material to handle the reflection
 					obstacle.material &&
 					// Collision can not occur where the ray starts (prevent infinite reflections)
-					fDistance(collision, currentRay.origin) > 1
+					fDistance(intersection, currentRay.origin) > 1
 				);
 			})
-			.sort(([[a]], [[b]]) => fDistance(a, currentRay.origin) - fDistance(b, currentRay.origin));
+			.sort(
+				({ intersection: a }, { intersection: b }) =>
+					fDistance(a, currentRay.origin) - fDistance(b, currentRay.origin)
+			);
 
 		// Exit if no collision is found
-		if (sortedCollisions.length === 0)
-			return [...lines, Line.fromAngle(currentRay.origin, currentRay.angle, MAX_TRACE_LENGTH)];
+		if (sortedCollisions.length === 0) return [...lines, rayToPts(currentRay)];
 
-		const [[collision, line], obstacle] = sortedCollisions[0];
+		const { intersection, collider, obstacle } = sortedCollisions[0];
 
 		// Get new rays resulting of the collision
-		const newRays = obstacle.material.handleCollision(currentRay, obstacle, collision, line);
-
-		events.trigger('new-ray', newRays);
+		const newRays = obstacle.material.handleCollision(intersection, collider, currentRay, obstacle);
 
 		// Trace new rays
 		return newRays
 			.map((ray) => {
-				return traceRay(ray, [...lines, [currentRay.origin, collision]], depth + 1);
+				return traceRay(ray, [...lines, [currentRay.origin, intersection]], depth + 1);
 			})
 			.flat();
 	};
@@ -68,16 +63,6 @@ export const createWorld = (): World => {
 			obstacles.push(obstacle);
 		},
 		traceRay,
-		drawObstacles: (form) => {
-			obstacles.forEach((obstacle) => {
-				if (obstacle.type === 'circle')
-					return form.fill('#fff').circle(Circle.fromCenter(obstacle.center, obstacle.radius));
-				if (obstacle.type === 'line') return form.fill('#fff').line([obstacle.start, obstacle.end]);
-				if (obstacle.type === 'curve')
-					return form
-						.strokeOnly('#fff')
-						.line(getPointsOnCurve(obstacle.start, obstacle.f, obstacle.scale, obstacle.rotation));
-			});
-		}
+		draw: (f) => obstacles.forEach((o) => o.draw(f))
 	};
 };
