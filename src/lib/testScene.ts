@@ -23,10 +23,11 @@ export const testScene: Scene = (space) => {
 	// world.add({ type: 'circle', center: new Pt(100, 400), radius: 100, material: mirror });
 	world.add({
 		type: 'curve',
-		start: new Pt(600, 1200),
+		start: new Pt(1800, 600),
 		f: (x) => (x / 4) ** 2,
 		scale: 10,
-		material: mirror
+		material: mirror,
+		rotation: -Math.PI / 2
 	});
 
 	events.on('data', (data) => {

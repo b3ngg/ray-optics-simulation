@@ -76,7 +76,7 @@ export const createWorld = (): World => {
 				if (obstacle.type === 'curve')
 					return form
 						.strokeOnly('#fff')
-						.line(getPointsOnCurve(obstacle.start, obstacle.f, obstacle.scale));
+						.line(getPointsOnCurve(obstacle.start, obstacle.f, obstacle.scale, obstacle.rotation));
 			});
 		}
 	};

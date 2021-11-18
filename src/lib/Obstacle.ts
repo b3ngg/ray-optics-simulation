@@ -5,7 +5,6 @@ import type { LinearFunction } from './geometry';
 import type { Material } from './Material';
 import type { Ray } from './Ray';
 import { MAX_TRACE_LENGTH } from './const';
-import { events } from './EventManager';
 
 export type Obstacle = CircleObstacle | LineObstacle | CurveObstacle;
 
@@ -31,6 +30,7 @@ export interface CurveObstacle extends BaseObstacle {
 	start: Pt;
 	f: LinearFunction;
 	scale: number;
+	rotation?: number;
 }
 
 export const getIntersections = (obstacle: Obstacle, ray: Ray): [Pt, PtIterable][] => {
@@ -44,7 +44,12 @@ export const getIntersections = (obstacle: Obstacle, ray: Ray): [Pt, PtIterable]
 
 	if (type === 'line') return [[Line.intersectLine2D([obstacle.start, obstacle.end], rayPts), []]];
 	if (type === 'curve') {
-		const curveParts = getPointsOnCurve(obstacle.start, obstacle.f, obstacle.scale);
+		const curveParts = getPointsOnCurve(
+			obstacle.start,
+			obstacle.f,
+			obstacle.scale,
+			obstacle.rotation
+		);
 		const intersects = [];
 		for (let i = 1; i < curveParts.length; i++) {
 			const start = curveParts[i - 1];
