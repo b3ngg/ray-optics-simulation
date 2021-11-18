@@ -13,9 +13,12 @@ export const testScene: Scene = (space) => {
 	const form = space.getForm();
 
 	const world = createWorld();
-	// world.add({ type: 'line', start: new Pt(700, 300), end: new Pt(1800, 500), material: mirror });
-	// world.add({ type: 'line', start: new Pt(200, 600), end: new Pt(1200, 800), material: mirror });
-	world.add({ type: 'circle', center: new Pt(200, 100), radius: 100, material: mirror });
+	world.add({ type: 'line', start: new Pt(700, 300), end: new Pt(1800, 500), material: mirror });
+	world.add({ type: 'line', start: new Pt(200, 600), end: new Pt(1200, 800), material: mirror });
+	world.add({ type: 'circle', center: new Pt(200, 1000), radius: 100, material: mirror });
+	world.add({ type: 'circle', center: new Pt(500, 800), radius: 100, material: mirror });
+	world.add({ type: 'circle', center: new Pt(900, 500), radius: 100, material: mirror });
+	world.add({ type: 'circle', center: new Pt(100, 400), radius: 100, material: mirror });
 
 	events.on('angle', ([pt, angle, reflection]) => {
 		form.text(pt, '' + reflection);
