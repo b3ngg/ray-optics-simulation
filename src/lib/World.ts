@@ -21,7 +21,7 @@ export const createWorld = (): World => {
 		if (depth >= MAX_TRACE_DEPTH) return lines;
 
 		// Test collision with every obstacle
-		const allCollisions: [Pt, Obstacle][] = obstacles.map((currentObstacle) => {
+		const allCollisions: [[Pt, PtIterable], Obstacle][] = obstacles.map((currentObstacle) => {
 			const collision = getIntersection(currentObstacle, currentRay);
 			events.trigger('collision', collision);
 			return [collision, currentObstacle];
@@ -29,7 +29,8 @@ export const createWorld = (): World => {
 
 		// Filter and sort collision depending on the distance to the ray origin
 		const sortedCollisions = allCollisions
-			.filter(([collision, obstacle]) => {
+			.filter((c) => c[0] !== undefined)
+			.filter(([[collision], obstacle]) => {
 				return (
 					collision &&
 					// Obstacle needs material to handle the reflection
@@ -38,16 +39,16 @@ export const createWorld = (): World => {
 					fDistance(collision, currentRay.origin) > 1
 				);
 			})
-			.sort((a, b) => fDistance(a[0], currentRay.origin) - fDistance(b[0], currentRay.origin));
+			.sort(([[a]], [[b]]) => fDistance(a, currentRay.origin) - fDistance(b, currentRay.origin));
 
 		// Exit if no collision is found
 		if (sortedCollisions.length === 0)
 			return [...lines, Line.fromAngle(currentRay.origin, currentRay.angle, MAX_TRACE_LENGTH)];
 
-		const [collision, obstacle] = sortedCollisions[0];
+		const [[collision, line], obstacle] = sortedCollisions[0];
 
 		// Get new rays resulting of the collision
-		const newRays = obstacle.material.handleCollision(currentRay, obstacle, collision);
+		const newRays = obstacle.material.handleCollision(currentRay, obstacle, collision, line);
 
 		events.trigger('new-ray', newRays);
 

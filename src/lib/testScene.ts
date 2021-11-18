@@ -1,6 +1,7 @@
 import type { Scene } from '$types/scene';
 import type { Ray } from './Ray';
 import { Line, Pt } from 'pts';
+import type { PtIterable } from 'pts';
 import { mirror } from './Material';
 import { createWorld } from './World';
 import { events } from './EventManager';
@@ -21,24 +22,27 @@ export const testScene: Scene = (space) => {
 	// world.add({ type: 'circle', center: new Pt(100, 400), radius: 100, material: mirror });
 	world.add({
 		type: 'curve',
-		start: new Pt(1000, 1000),
-		f: (x) => (x / 5) ** 3,
+		start: new Pt(400, 1000),
+		f: (x) => (x / 5) ** 2,
 		scale: 10,
 		material: mirror
 	});
 
-	events.on('angle', ([pt, angle, reflection]) => {
-		form.text(pt, '' + reflection);
-		form.stroke('#2774a5', 2).line(Line.fromAngle(pt, angle, 100));
+	events.on('data', (data) => {
+		form.text(new Pt(10, 20), '' + data);
 	});
+
 	events.on('collision', (data) => {
-		form.stroke('#fff').point(data as Pt);
+		if (!data) return;
+		const [collision, line] = data as [Pt, PtIterable];
+		form.strokeOnly('#fff', 1).point(collision);
+		form.stroke('#f22628', 2).line(line);
 	});
 
 	events.on('new-ray', (data) => {
 		const rays = data as Ray[];
 		rays.forEach((ray) => {
-			form.stroke('#f22628', 4).line(Line.fromAngle(ray.origin, ray.angle, 200));
+			form.stroke('#f22628', 2).line(Line.fromAngle(ray.origin, ray.angle, 200));
 		});
 	});
 
