@@ -12,13 +12,12 @@ const reflectRayOnLine = (incidentRay: Ray, line: LineObstacle, collisionPoint: 
 	const normalAngle = line.start.$subtract(line.end).angle() + Math.PI / 2;
 	const lineNormal = new Pt(0, 1).toAngle(normalAngle).$unit();
 
-	events.trigger('angle', normalAngle);
-
 	// TODO: Assure the ray reflects on the right side
 	const perpendicular = 2 * Vec.dot(d, lineNormal);
 	const reflection = Vec.subtract(d, Vec.multiply(lineNormal, perpendicular));
 	const r = new Pt(reflection);
 
+	events.trigger('angle', [collisionPoint, normalAngle, r.angle()]);
 	return { origin: collisionPoint, angle: r.angle() };
 };
 

@@ -1,4 +1,5 @@
 import { Circle, Line, Pt } from 'pts';
+import { MAX_TRACE_LENGTH } from './const';
 import type { Material } from './Material';
 import type { Ray } from './Ray';
 
@@ -23,10 +24,10 @@ export interface LineObstacle extends BaseObstacle {
 
 export const getIntersection = (obstacle: Obstacle, ray: Ray): Pt => {
 	const { type } = obstacle;
-	const rayPts = Line.fromAngle(ray.origin, ray.angle, 1);
+	const rayPts = Line.fromAngle(ray.origin, ray.angle, MAX_TRACE_LENGTH);
 
 	if (type === 'circle')
-		return Circle.intersectRay2D(Circle.fromCenter(obstacle.center, obstacle.radius), rayPts)[1];
+		return Circle.intersectLine2D(Circle.fromCenter(obstacle.center, obstacle.radius), rayPts)[1];
 
-	if (type === 'line') return Line.intersectLineWithRay2D([obstacle.start, obstacle.end], rayPts);
+	if (type === 'line') return Line.intersectLine2D([obstacle.start, obstacle.end], rayPts);
 };

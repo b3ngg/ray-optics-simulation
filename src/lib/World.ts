@@ -4,6 +4,8 @@ import type { Ray } from './Ray';
 import type { Obstacle } from './Obstacle';
 import { Circle, Pt } from 'pts';
 import { getIntersection } from './Obstacle';
+import { events } from './EventManager';
+import { MAX_TRACE_DEPTH, MAX_TRACE_LENGTH } from './const';
 
 export interface World {
 	add: (obstacle: Obstacle) => void;
@@ -15,11 +17,12 @@ export const createWorld = (): World => {
 	const obstacles: Obstacle[] = [];
 
 	const traceRay = (currentRay: Ray, lines: PtIterable[] = [], depth = 0) => {
-		if (depth > 10) return lines;
+		if (depth >= MAX_TRACE_DEPTH) return lines;
 
 		// Test collision with every obstacle
 		const allCollisions: [Pt, Obstacle][] = obstacles.map((currentObstacle) => {
 			const collision = getIntersection(currentObstacle, currentRay);
+			events.trigger('collision', collision);
 			return [collision, currentObstacle];
 		});
 
@@ -42,12 +45,14 @@ export const createWorld = (): World => {
 
 		// Exit if no collision is found
 		if (sortedCollisions.length === 0)
-			return [...lines, Line.fromAngle(currentRay.origin, currentRay.angle, 2000)];
+			return [...lines, Line.fromAngle(currentRay.origin, currentRay.angle, MAX_TRACE_LENGTH)];
 
 		const [collision, obstacle] = sortedCollisions[0];
 
 		// Get new rays resulting of the collision
 		const newRays = obstacle.material.handleCollision(currentRay, obstacle, collision);
+
+		events.trigger('new-ray', newRays);
 
 		// Trace new rays
 		return newRays
