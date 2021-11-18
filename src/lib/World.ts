@@ -6,6 +6,7 @@ import { Circle, Pt } from 'pts';
 import { getIntersection } from './Obstacle';
 import { events } from './EventManager';
 import { MAX_TRACE_DEPTH, MAX_TRACE_LENGTH } from './const';
+import { fDistance } from './geometry';
 
 export interface World {
 	add: (obstacle: Obstacle) => void;
@@ -34,14 +35,10 @@ export const createWorld = (): World => {
 					// Obstacle needs material to handle the reflection
 					obstacle.material &&
 					// Collision can not occur where the ray starts (prevent infinite reflections)
-					!collision.equals(currentRay.origin)
+					fDistance(collision, currentRay.origin) > 1
 				);
 			})
-			.sort(
-				(a, b) =>
-					a[0].$subtract(currentRay.origin).magnitudeSq() -
-					b[0].$subtract(currentRay.origin).magnitudeSq()
-			);
+			.sort((a, b) => fDistance(a[0], currentRay.origin) - fDistance(b[0], currentRay.origin));
 
 		// Exit if no collision is found
 		if (sortedCollisions.length === 0)

@@ -16,8 +16,8 @@ export const testScene: Scene = (space) => {
 	world.add({ type: 'line', start: new Pt(700, 300), end: new Pt(1800, 500), material: mirror });
 	world.add({ type: 'line', start: new Pt(200, 600), end: new Pt(1200, 800), material: mirror });
 
-	events.on('angle', ([pt, angle]) => {
-		// form.text(pt, '' + angle);
+	events.on('angle', ([pt, angle, reflection]) => {
+		form.text(pt, '' + reflection);
 		form.stroke('#2774a5', 2).line(Line.fromAngle(pt, angle, 100));
 	});
 	events.on('collision', (data) => {
@@ -44,7 +44,10 @@ export const testScene: Scene = (space) => {
 
 		const lines = world.traceRay(startRay);
 
-		lines.forEach((l) => form.stroke('#fff', 1).line(l));
+		lines.forEach((l, i) => {
+			form.font(20).text(l[0].$add(20), '' + i);
+			form.stroke('#fff', 1).line(l);
+		});
 	});
 
 	space.bindMouse().bindTouch().play();
