@@ -1,9 +1,9 @@
 import { CanvasForm, Line } from 'pts';
 import type { PtIterable } from 'pts';
 import type { Ray } from './Ray';
+import { getIntersections } from './Obstacle';
 import type { Obstacle } from './Obstacle';
 import { Circle, Pt } from 'pts';
-import { getIntersection } from './Obstacle';
 import { events } from './EventManager';
 import { MAX_TRACE_DEPTH, MAX_TRACE_LENGTH } from './const';
 import { fDistance, getPointsOnCurve } from './geometry';
@@ -21,11 +21,14 @@ export const createWorld = (): World => {
 		if (depth >= MAX_TRACE_DEPTH) return lines;
 
 		// Test collision with every obstacle
-		const allCollisions: [[Pt, PtIterable], Obstacle][] = obstacles.map((currentObstacle) => {
-			const collision = getIntersection(currentObstacle, currentRay);
-			events.trigger('collision', collision);
-			return [collision, currentObstacle];
+		const rawCollisions: [[Pt, PtIterable][], Obstacle][] = obstacles.map((currentObstacle) => {
+			return [getIntersections(currentObstacle, currentRay), currentObstacle];
 		});
+		const allCollisions: [[Pt, PtIterable], Obstacle][] = rawCollisions.flatMap(([cs, o]) =>
+			cs.map((c) => [c, o])
+		);
+
+		allCollisions.forEach((c) => events.trigger('collision', c));
 
 		// Filter and sort collision depending on the distance to the ray origin
 		const sortedCollisions = allCollisions

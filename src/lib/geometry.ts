@@ -12,6 +12,6 @@ export const getPointsOnCurve = (origin: Pt, f: LinearFunction, scale: number): 
 	const pts = [...Array(steps).keys()]
 		.slice(1)
 		.map((x) => x - steps / 2)
-		.map((x) => origin.$add(fPointOnCurve(f, x).$multiply(scale)));
+		.map((x) => origin.$add(fPointOnCurve(f, x / scale).$multiply(scale)));
 	return new Group(...pts);
 };

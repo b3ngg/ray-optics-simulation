@@ -5,6 +5,7 @@ import type { PtIterable } from 'pts';
 import { mirror } from './Material';
 import { createWorld } from './World';
 import { events } from './EventManager';
+import type { Obstacle } from './Obstacle';
 
 /**
  * Placeholder scene
@@ -22,8 +23,8 @@ export const testScene: Scene = (space) => {
 	// world.add({ type: 'circle', center: new Pt(100, 400), radius: 100, material: mirror });
 	world.add({
 		type: 'curve',
-		start: new Pt(400, 1000),
-		f: (x) => (x / 5) ** 2,
+		start: new Pt(600, 1200),
+		f: (x) => (x / 4) ** 2,
 		scale: 10,
 		material: mirror
 	});
@@ -34,7 +35,7 @@ export const testScene: Scene = (space) => {
 
 	events.on('collision', (data) => {
 		if (!data) return;
-		const [collision, line] = data as [Pt, PtIterable];
+		const [[collision, line]] = data as [[Pt, PtIterable], Obstacle];
 		form.strokeOnly('#fff', 1).point(collision);
 		form.stroke('#f22628', 2).line(line);
 	});
