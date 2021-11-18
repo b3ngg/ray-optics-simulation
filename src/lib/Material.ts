@@ -27,11 +27,10 @@ export const mirror: Material = {
 			return [reflectRayOnLine(incidentRay, obstacle, collisionPoint)];
 		}
 
-		// if (o.type === 'circle') {
-		// 	const perpendicularAngle = is.$subtract(o.center).angle();
-		// 	const direction = new Pt(0, 1).toAngle(perpendicularAngle);
-		// 	return [{ origin: is, direction: direction.$unit() }];
-		// }
+		if (obstacle.type === 'circle') {
+			const perpendicularAngle = collisionPoint.$subtract(obstacle.center).angle();
+			return [{ origin: collisionPoint, angle: perpendicularAngle }];
+		}
 
 		return [];
 	}
