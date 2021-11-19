@@ -8,7 +8,10 @@ export const fDistance = (a: Pt, b: Pt): number => a.$subtract(b).magnitudeSq();
 
 export const fPointOnCurve = (f: LinearFunction, x: number): Pt => new Pt(x, -f(x));
 
-export const getPointsOnCurve = (origin: Pt, { f, scale, rotation = 0 }: CurveOptions): Group => {
+export const getPointsOnCurve = (
+	origin: Pt,
+	{ f, scale, rotation = 0 }: Omit<CurveOptions, 'type'>
+): Group => {
 	const steps = CURVE_STEPS * scale;
 	const pts = [...Array(steps).keys()]
 		.slice(1)

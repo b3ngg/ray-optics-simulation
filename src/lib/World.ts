@@ -4,8 +4,7 @@ import type { World } from '$types/World';
 import type { Ray } from '$types/Ray';
 import { MAX_TRACE_DEPTH } from './const';
 import { fDistance } from './geometry';
-import { rayToPts } from './Ray';
-import { events } from './EventManager';
+import { rayToPts } from './ray';
 
 export const createWorld = (): World => {
 	const obstacles: Obstacle[] = [];
@@ -23,8 +22,6 @@ export const createWorld = (): World => {
 			.flatMap(([intersectionReturns, obstacle]) =>
 				intersectionReturns.map((c) => ({ ...c, obstacle }))
 			);
-
-		allCollisions.forEach((c) => events.trigger('collision', c));
 
 		// Filter and sort collision depending on the distance to the ray origin
 		const sortedCollisions = allCollisions

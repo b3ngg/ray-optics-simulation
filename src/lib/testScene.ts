@@ -1,11 +1,9 @@
-import type { IntersectionReturn } from '$types/Obstacle';
 import type { Ray } from '$types/Ray';
-import type { Scene } from '$types/scene';
+import type { Scene } from '$types/Scene';
 import { Pt } from 'pts';
-import { events } from './EventManager';
 import { mirror } from './materials';
 import { createCircle, createLine } from './obstacles';
-import { createWorld } from './World';
+import { createWorld } from './world';
 
 /**
  * Placeholder scene
@@ -16,20 +14,11 @@ export const testScene: Scene = (space) => {
 
 	const world = createWorld();
 
+	world.add(createCircle(new Pt(200, 200), { material: mirror, radius: 10 }));
+	world.add(createLine(new Pt(200, 200), { material: mirror, end: new Pt(500, 1000) }));
+
 	space.add(() => {
-		// Draw obstacles
-		world.add(createCircle(new Pt(200, 200), { material: mirror, radius: 10, type: 'circle' }));
-		world.add(
-			createLine(new Pt(200, 200), { material: mirror, end: new Pt(500, 1000), type: 'line' })
-		);
-
 		world.draw(form);
-
-		events.on('collision', (data) => {
-			if (!data) return;
-			const { intersection } = data as IntersectionReturn[0];
-			form.point(intersection);
-		});
 
 		const startPt = new Pt(1000, 100);
 		const startRay: Ray = {

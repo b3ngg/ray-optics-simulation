@@ -10,13 +10,14 @@ import type {
 import { Circle, Line } from 'pts';
 import { getPointsOnCurve } from './geometry';
 
-type CreateObstacle<T = ObstacleOptions> = (start: Pt, options: T) => Obstacle<T>;
+type CreateObstacle<T = ObstacleOptions> = (start: Pt, options: Omit<T, 'type'>) => Obstacle<T>;
 
 /** Create a new circle obstacle */
 export const createCircle: CreateObstacle<CircleOptions> = (start, options) => {
 	const pts = Circle.fromCenter(start, options.radius);
 	return {
 		...options,
+		type: 'circle',
 		start,
 		getRayIntersections: (r) => [
 			{
@@ -33,6 +34,7 @@ export const createLine: CreateObstacle<LineOptions> = (start, options) => {
 	const pts = [start, options.end];
 	return {
 		...options,
+		type: 'line',
 		start,
 		getRayIntersections: (r) => [
 			{
@@ -49,6 +51,7 @@ export const createCurve: CreateObstacle<CurveOptions> = (start, options) => {
 	const pts = getPointsOnCurve(start, options);
 	return {
 		...options,
+		type: 'curve',
 		start,
 		getRayIntersections: (r) => {
 			const intersects: IntersectionReturn = [];
