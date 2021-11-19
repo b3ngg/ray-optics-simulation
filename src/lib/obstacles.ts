@@ -9,6 +9,7 @@ import type {
 } from '$types/Obstacle';
 import { Circle, Line } from 'pts';
 import { getPointsOnCurve } from './math';
+import { COLORS } from './const';
 
 type CreateObstacle<T = ObstacleOptions> = (start: Pt, options: Omit<T, 'type'>) => Obstacle<T>;
 
@@ -25,7 +26,7 @@ export const createCircle: CreateObstacle<CircleOptions> = (start, options) => {
 				collider: pts
 			}
 		],
-		draw: (f) => f.strokeOnly('#fff').circle(pts)
+		draw: (f) => f.strokeOnly(COLORS.MIRROR, 6).circle(pts)
 	};
 };
 
@@ -42,7 +43,7 @@ export const createLine: CreateObstacle<LineOptions> = (start, options) => {
 				collider: pts
 			}
 		],
-		draw: (f) => f.strokeOnly('#fff').line(pts)
+		draw: (f) => f.strokeOnly(COLORS.MIRROR, 6).line(pts)
 	};
 };
 
@@ -63,6 +64,6 @@ export const createCurve: CreateObstacle<CurveOptions> = (start, options) => {
 				return result;
 			}, []);
 		},
-		draw: (f) => f.strokeOnly('#fff').line(pts)
+		draw: (f) => f.strokeOnly(COLORS.MIRROR, 6).line(pts)
 	};
 };

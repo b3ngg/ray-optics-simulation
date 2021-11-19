@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { Scene } from '$types/scene';
+	import type { Scene } from '$types/Scene';
 	import { onMount } from 'svelte';
 	import { CanvasSpace } from 'pts';
+	import { COLORS } from '$lib/const';
 
-	export let backgroundColor: string = '#333';
+	export let backgroundColor: string = COLORS.BG;
 	export let scene: Scene;
 
 	let canvas: HTMLCanvasElement;

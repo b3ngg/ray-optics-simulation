@@ -1,5 +1,6 @@
 import type { Scene } from '$types/Scene';
 import { Pt } from 'pts';
+import { COLORS } from './const';
 import { mirror } from './materials';
 import { createCircle, createCurve, createLine } from './obstacles';
 import { createRay } from './ray';
@@ -27,7 +28,7 @@ export const testScene: Scene = (space) => {
 
 		const lines = world.traceRay([startRay, createRay(startPt, -Math.PI - 1)]);
 		lines.forEach((l) => {
-			form.stroke('#fff', 1).line(l);
+			form.stroke(COLORS.RAY, 4).alpha(0.8).line(l);
 		});
 	});
 
