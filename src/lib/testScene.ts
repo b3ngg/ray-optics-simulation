@@ -1,14 +1,13 @@
-import type { Ray } from '$types/Ray';
 import type { Scene } from '$types/Scene';
 import { Pt } from 'pts';
 import { mirror } from './materials';
 import { createCircle, createLine } from './obstacles';
+import { createRay } from './ray';
 import { createWorld } from './world';
 
 /**
  * Placeholder scene
  */
-
 export const testScene: Scene = (space) => {
 	const form = space.getForm();
 
@@ -21,14 +20,10 @@ export const testScene: Scene = (space) => {
 		world.draw(form);
 
 		const startPt = new Pt(1000, 100);
-		const startRay: Ray = {
-			origin: startPt,
-			angle: space.pointer.$subtract(startPt).angle()
-		};
+		const startRay = createRay(startPt, space.pointer.$subtract(startPt).angle());
 
-		const lines = world.traceRay(startRay);
+		const lines = world.traceRay([startRay, createRay(startPt, -Math.PI - 1)]);
 		lines.forEach((l, i) => {
-			form.font(20).text(l[0].$add(20), '' + i);
 			form.stroke('#fff', 1).line(l);
 		});
 	});

@@ -1,9 +1,10 @@
-import type { CanvasForm, PtIterable } from 'pts';
+import type { CanvasForm } from 'pts';
 import type { Obstacle } from './Obstacle';
-import type { Ray } from './Ray';
+import type { TraceEnvironment } from './TraceEnvironment';
 
+/** The world manages all objects and their behaviors */
 export interface World {
 	add: (obstacle: Obstacle) => void;
-	traceRay: (ray: Ray) => PtIterable[];
+	traceRay: TraceEnvironment;
 	draw: (form: CanvasForm) => void;
 }

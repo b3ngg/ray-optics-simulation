@@ -1,13 +1,15 @@
+import type { MathFunction } from '$types/helper';
 import type { CurveOptions } from '$types/Obstacle';
 import { Group, Pt } from 'pts';
 import { CURVE_STEPS } from './const';
 
-export type LinearFunction = (x: number) => number;
-
+/** Calculate the distance between two points */
 export const fDistance = (a: Pt, b: Pt): number => a.$subtract(b).magnitudeSq();
 
-export const fPointOnCurve = (f: LinearFunction, x: number): Pt => new Pt(x, -f(x));
+/** Get a point on a curve for a specify x value */
+export const fPointOnCurve = (f: MathFunction, x: number): Pt => new Pt(x, -f(x));
 
+/** Get a array scaled and rotated points on a curve */
 export const getPointsOnCurve = (
 	origin: Pt,
 	{ f, scale, rotation = 0 }: Omit<CurveOptions, 'type'>

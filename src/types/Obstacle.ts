@@ -28,6 +28,7 @@ export interface CurveOptions extends DefaultOptions {
 	rotation?: number;
 }
 
+/** Rays can collide with an obstacle. The collision will be processed by the obstacles material */
 export type Obstacle<T = ObstacleOptions> = T & {
 	start: Pt;
 	getRayIntersections: (ray: PtIterable) => IntersectionReturn;
