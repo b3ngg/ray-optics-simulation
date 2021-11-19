@@ -1,7 +1,7 @@
 import type { Scene } from '$types/Scene';
 import { Pt } from 'pts';
 import { mirror } from './materials';
-import { createCircle, createLine } from './obstacles';
+import { createCircle, createCurve, createLine } from './obstacles';
 import { createRay } from './ray';
 import { createWorld } from './world';
 
@@ -15,6 +15,9 @@ export const testScene: Scene = (space) => {
 
 	world.add(createCircle(new Pt(200, 200), { material: mirror, radius: 10 }));
 	world.add(createLine(new Pt(200, 200), { material: mirror, end: new Pt(500, 1000) }));
+	world.add(
+		createCurve(new Pt(800, 1200), { f: (x) => (x / 4) ** 2, scale: 10, material: mirror })
+	);
 
 	space.add(() => {
 		world.draw(form);
@@ -23,7 +26,7 @@ export const testScene: Scene = (space) => {
 		const startRay = createRay(startPt, space.pointer.$subtract(startPt).angle());
 
 		const lines = world.traceRay([startRay, createRay(startPt, -Math.PI - 1)]);
-		lines.forEach((l, i) => {
+		lines.forEach((l) => {
 			form.stroke('#fff', 1).line(l);
 		});
 	});

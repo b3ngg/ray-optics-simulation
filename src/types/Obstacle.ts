@@ -2,13 +2,13 @@ import type { CanvasForm, Pt, PtIterable } from 'pts';
 import type { MathFunction } from './helper';
 import type { Material } from './Material';
 
-export type IntersectionReturn = { intersection: Pt; collider: PtIterable }[];
+export type IntersectionReturn = Readonly<{ intersection: Pt; collider: PtIterable }[]>;
 
 export type ObstacleOptions = CircleOptions | LineOptions | CurveOptions;
 
 export interface DefaultOptions {
 	type: 'circle' | 'line' | 'curve';
-	material: Material;
+	material?: Material;
 }
 
 export interface CircleOptions extends DefaultOptions {
@@ -31,6 +31,6 @@ export interface CurveOptions extends DefaultOptions {
 /** Rays can collide with an obstacle. The collision will be processed by the obstacles material */
 export type Obstacle<T = ObstacleOptions> = T & {
 	start: Pt;
-	getRayIntersections: (ray: PtIterable) => IntersectionReturn;
+	getRayIntersections: (ray: PtIterable) => Readonly<IntersectionReturn>;
 	draw: (form: CanvasForm) => void;
 };

@@ -9,5 +9,5 @@ export interface Material {
 		collider: PtIterable,
 		incoming: Ray,
 		obstacle: Obstacle
-	) => Ray[];
+	) => Readonly<Ray[]>;
 }

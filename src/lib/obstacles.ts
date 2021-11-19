@@ -8,7 +8,7 @@ import type {
 	ObstacleOptions
 } from '$types/Obstacle';
 import { Circle, Line } from 'pts';
-import { getPointsOnCurve } from './geometry';
+import { getPointsOnCurve } from './math';
 
 type CreateObstacle<T = ObstacleOptions> = (start: Pt, options: Omit<T, 'type'>) => Obstacle<T>;
 
@@ -25,7 +25,7 @@ export const createCircle: CreateObstacle<CircleOptions> = (start, options) => {
 				collider: pts
 			}
 		],
-		draw: (f) => f.fill('#fff').circle(pts)
+		draw: (f) => f.strokeOnly('#fff').circle(pts)
 	};
 };
 
@@ -42,7 +42,7 @@ export const createLine: CreateObstacle<LineOptions> = (start, options) => {
 				collider: pts
 			}
 		],
-		draw: (f) => f.fill('#fff').line(pts)
+		draw: (f) => f.strokeOnly('#fff').line(pts)
 	};
 };
 
@@ -54,15 +54,15 @@ export const createCurve: CreateObstacle<CurveOptions> = (start, options) => {
 		type: 'curve',
 		start,
 		getRayIntersections: (r) => {
-			const intersects: IntersectionReturn = [];
-			for (let i = 1; i < pts.length; i++) {
+			return pts.reduce<IntersectionReturn>((result, v, i) => {
+				if (i === 0) return result;
 				const start = pts[i - 1];
-				const end = pts[i];
+				const end = v;
 				const intersect = Line.intersectLine2D([start, end], r);
-				if (intersect) intersects.push({ intersection: intersect, collider: [start, end] });
-			}
-			return intersects;
+				if (intersect) return [...result, { intersection: intersect, collider: [start, end] }];
+				return result;
+			}, []);
 		},
-		draw: (f) => f.fill('#fff').line(pts)
+		draw: (f) => f.strokeOnly('#fff').line(pts)
 	};
 };

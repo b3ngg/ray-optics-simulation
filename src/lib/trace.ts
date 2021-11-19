@@ -3,20 +3,19 @@ import type { Ray } from '$types/Ray';
 import type { TraceEnvironment } from '$types/TraceEnvironment';
 import type { Pt, PtIterable } from 'pts';
 import { MAX_TRACE_DEPTH } from './const';
-import { fDistance } from './geometry';
+import { fDistance } from './math';
 import { rayToPts } from './ray';
 
-type Collision = IntersectionReturn[0] & { obstacle: Obstacle };
+type Collision = Readonly<IntersectionReturn[0] & { obstacle: Obstacle }>;
 
 /** Get all collisions of the ray with all objects */
-const getAllCollisions = (ray: Ray, obstacles: Obstacle[]): Collision[] => {
+const getAllCollisions = (ray: Ray, obstacles: Obstacle[]): Readonly<Collision[]> => {
 	const rayPts = rayToPts(ray);
 
 	// Get all raw collisions
-	const allCollisions: [IntersectionReturn, Obstacle][] = obstacles.map((currentObstacle) => [
-		currentObstacle.getRayIntersections(rayPts),
-		currentObstacle
-	]);
+	const allCollisions: Readonly<[IntersectionReturn, Obstacle][]> = obstacles.map(
+		(currentObstacle) => [currentObstacle.getRayIntersections(rayPts), currentObstacle]
+	);
 
 	// Transform collisions into an practical format
 	return allCollisions
@@ -27,7 +26,10 @@ const getAllCollisions = (ray: Ray, obstacles: Obstacle[]): Collision[] => {
 };
 
 /** Filter the collisions and get the closest real collision */
-const getFirstCollision = (collisions: Collision[], rayOrigin: Pt): Collision => {
+const getFirstCollision = (
+	collisions: Readonly<Collision[]>,
+	rayOrigin: Pt
+): Readonly<Collision> => {
 	const sortedCollisions = collisions
 		.filter(({ intersection, obstacle }) => {
 			return (

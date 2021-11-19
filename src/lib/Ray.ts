@@ -4,8 +4,8 @@ import { Line } from 'pts';
 import { MAX_TRACE_LENGTH } from './const';
 
 /** Shortcut for creating a ray */
-export const createRay = (origin: Pt, angle: number): Ray => ({ origin, angle });
+export const createRay = (origin: Pt, angle: number): Readonly<Ray> => ({ origin, angle });
 
 /** Converts a ray to a line with start and end points */
-export const rayToPts = (ray: Ray): PtIterable =>
+export const rayToPts = (ray: Ray): Readonly<PtIterable> =>
 	Line.fromAngle(ray.origin, ray.angle, MAX_TRACE_LENGTH);

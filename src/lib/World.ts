@@ -3,7 +3,7 @@ import type { TraceEnvironment } from '$types/TraceEnvironment';
 import type { World } from '$types/World';
 import { createTraceEnvironment } from './trace';
 
-export const createWorld = (): World => {
+export const createWorld = (): Readonly<World> => {
 	const obstacles: Obstacle[] = [];
 
 	let environment: TraceEnvironment = createTraceEnvironment(obstacles);
