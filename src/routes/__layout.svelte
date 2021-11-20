@@ -9,7 +9,6 @@
 	<menu class="flex items-center justify-between px-6">
 		{#each Object.keys(scenes) as key, i}
 			<a
-				rel="external"
 				href="/scene/{i}"
 				class="font-medium hover:underline {$page.params['i'] === '' + i && 'underline'}"
 			>
