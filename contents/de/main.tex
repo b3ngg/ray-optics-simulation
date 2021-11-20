@@ -1,8 +1,49 @@
-\documentclass{article}
-\title{Simulieren der Reflexion von Lichtstrahlen in einem zweidimensionalen Raum}
+\documentclass[12pt, a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{csquotes}
+
+% Default format
+\usepackage[a4paper,lmargin={3cm},rmargin={3cm},
+            tmargin={2cm},bmargin={2cm}]{geometry}
+
+% Packages
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{blindtext}
+\usepackage{titlesec}
+\usepackage[backend=bibtex, style=authortitle]{biblatex}
+
+% Bib ref
+\addbibresource{ref.bib}
+
+% Set stretch
+\renewcommand{\baselinestretch}{1.5}
+
+% Change chapter format
+\titleformat{\chapter}{\normalfont\huge}{\thechapter}{20pt}{\huge\bfseries}
+
+
+\title{Technische Realisierung einer Computer-Simulation für die Reflexion von Lichtstrahlen in einem zweidimensionalem Raum}
 \author{Ben Weber}
 \date{November 2021}
+\pagenumbering{gobble}
 \begin{document}
    \maketitle
-   Hello world!
+   % Add format for content
+   \newgeometry{lmargin={3cm},rmargin={4cm}}
+   
+   \tableofcontents
+   \clearpage
+   \pagenumbering{arabic}
+
+   \include{einleitung.tex}
+   \include{hauptteil.tex}
+   \include{fazit.tex}
+
+   Test \parencite[vgl.][S. 15]{Nobody06}
+
+   \printbibliography
 \end{document}
