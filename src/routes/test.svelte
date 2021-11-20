@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Renderer from '$components/Renderer.svelte';
-	import { start } from '$lib/scenes/start';
+	import { testScene } from '$lib/scenes/testScene';
 </script>
 
-<Renderer scene={start} />
+<Renderer scene={testScene} />

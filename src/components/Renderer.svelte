@@ -11,7 +11,7 @@
 
 	onMount(() => {
 		const space = new CanvasSpace(canvas);
-		space.setup({ bgcolor: backgroundColor, resize: true });
+		space.setup({ bgcolor: backgroundColor, offscreen: false, retina: true, resize: true });
 		scene(space);
 
 		() => space.dispose();
