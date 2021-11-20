@@ -1,2 +1,18 @@
-\chapter{Hauptteil}
-\blindtext[20]
+\chapter{Aufbau}
+\section{Lichtstrahl}
+In der geometrischen Optik geht man bei einem Lichtstrahl \code{Ray} 
+von einem Strahl aus, der sich von einem Ursprung $ A $  
+geradlinig in eine Richtung mit dem Winkel 
+$ \alpha $ ausbreitet. \parencite[vgl.][S. 1041]{tipler2015physik} mathematisch 
+wird dieser als Halbgerade angesehen $ \overrightarrow{AB} $. 
+Da der Punkt $ B $ für die Simulation keinen Nutzen hat, ist es 
+sinnvoll den Startpunkt als Ortsvektor $ \vec{O} $ \code{origin} innerhalb der Welt
+und den Winkel \code{angle}, in den der Strahl ausgeht direkt zu speichern. 
+
+\section{Lichtweg}
+Es muss davon ausgegangen werden, dass ein Lichtstrahl in der 
+Simulation durch die Kollision mit anderen Objekten seine Richtung verändert. 
+Ab einer Richtungsänderung wird der bisherige Lichtstrahl als Lichtweg \code{Line} 
+gespeichert, um in später zu visualisieren.
+Hierbei besteht ein Lichtstrahl aus den Ortsvektoren $ \vec{O} $ \code{origin} dem 
+Ursprung des Lichtstrahls und $ \vec{E} $ \code{end} dem Punkt der Kollision.
