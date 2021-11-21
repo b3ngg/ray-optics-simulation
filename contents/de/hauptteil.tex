@@ -28,10 +28,10 @@ Hier werden diese verwaltet, verarbeitet und zur Visualisierung ausgegeben.
 In der geometrischen Optik geht man bei einem Lichtstrahl \code{Ray} 
 von einem Strahl aus, der sich von einem Ursprung $ A $  
 geradlinig in eine Richtung mit dem Winkel 
-$ \alpha $ ausbreitet. \parencite[vgl.][S. 1041]{tipler2015physik} mathematisch 
+$ \alpha $ ausbreitet. \parencite[vgl.][S. 1041]{tipler2015physik} Mathematisch 
 wird dieser als Halbgerade angesehen $ \overrightarrow{AB} $. 
 In der Simulation ist es sinnvoll lediglich den Startpunkt als Ortsvektor $ \vec{O} $ \code{origin} innerhalb der Welt
-und den Winkel \code{angle}, in den der Strahl ausgeht direkt zu speichern. 
+und den Winkel \code{angle}, in den der Strahl ausgeht, direkt zu speichern. 
 
 \section{Lichtweg}
 Es muss davon ausgegangen werden, dass ein Lichtstrahl in der 
@@ -65,7 +65,7 @@ Um eine Kurve beliebig in der Welt zu positionieren, kann
 ihr zusätzlich einen Winkel $ \gamma $ \code{rotation} übergeben werden, 
 der alle Punkte auf der Kurve, relativ zum Ursprung, rotiert. \\
 Im Umfang dieser Arbeit wird bewusst auf eine vollständige und genaue Darstellung eines Graphen verzichtet. 
-Daher werden nur Punkte in einem Interval $ [-40, 40] $ im Abstand von einer übergebenen Skalierung $ k $ \code{scale} errechnet, 
+Daher werden nur Punkte in einem Intervall $ [-40, 40] $ im Abstand von einer übergebenen Skalierung $ k $ \code{scale} errechnet, 
 als Linien verbunden und als diese fortlaufend verarbeitet. 
 Diese Annäherung ist ausreichend, während gleichzeitig der Umfang stark reduziert wird.
 
@@ -77,19 +77,19 @@ Ein Material ist für die Verarbeitung eines einfallenden, mit dem Hindernis kol
 und kann eine beliebige Anzahl an neuen Lichtstrahlen zurückgeben. \\ 
 In dieser Arbeit wird nur die Reflexion bei dem Material Spiegel \code{mirror} behandelt. 
 Eine Trennung von Material und Hindernis ermöglicht jedoch eine einfache Erweiterung.
-Dabei können, trotz Veränderung der strahlenoptischer Funktion, die geometrischen Eigenschaften beibehalten werden.
+Dabei können, trotz Veränderung der strahlenoptischen Funktion, die geometrischen Eigenschaften beibehalten werden.
 So könnte beispielsweise ein Kreis einerseits als Spiegel die Lichtstrahlen reflektieren 
-und anderseits als Glas die Lichtstrahlen brechen; ohne das dafür die Veränderung des Hindernisses von Nöten wäre.
+und anderseits als Glas die Lichtstrahlen brechen; ohne das dafür die Veränderung des Hindernisses vonnöten wäre.
 
 
 \chapter{Technische Voraussetzungen}
 Um die Zugänglichkeit der Simulation zu erhöhen, wird diese als Web-App programmiert. 
-Dazu wird die Programmiersprache TypeScript benutzt und die Applikation wird mit dem Framework „SvelteKit“\footnote{https://kit.svelte.dev} kompiliert.
+Dazu wird die Programmiersprache TypeScript genutzt und die Applikation wird mit dem Framework „SvelteKit“\footnote{https://kit.svelte.dev} kompiliert.
 Zur Visualisierung wird die Library „Pts“\footnote{https://ptsjs.org} verwendet. Diese ermöglicht eine einfache Verwendung der Canvas-API. 
 Zusätzlich werden aber auch einige mathematische Hilfsfunktionen von dieser Library verwendet.
 
 Der gesamte Quellcode für die Simulation ist auf GitHub zu finden\footnote{https://github.com/b3ngg/ray-optics-simulation}. 
-Im Folgenden werden nur kleine, unvollständige Ausschnitte aus dem Code eingebunden. 
+Im Folgenden werden nur rudimentäre Ausschnitte aus dem Code eingebunden. 
 Die fertige Web-App ist ebenfalls als Website aufrufbar\footnote{https://optics.b3n.gg}.
 
 
@@ -135,7 +135,7 @@ export const lineReflection: Scene = (space) => {
 \section{Berechnung des Lichtwegs}
 Bei der Berechnung eines Lichtwegs startet die Simulation nur mit einem Ausgangs-Lichtstrahl.
 Zunächst muss die erste Überschneidung des Strahls mit einem Hindernis bestimmt werden. 
-Für die Bestimmung des Schnittpunktes werden die üblichen Verfahren der euklidischen Geometrie benutzt. 
+Für die Bestimmung des Schnittpunktes werden die üblichen Verfahren der euklidischen Geometrie genutzt. 
 Die Funktionen dafür werden von Pts bereitgestellt und sollen hier nicht weiter vertieft werden. \\ 
 Der Weg von $ \vec{O} $ des Lichtstrahls bis zum Schnittpunkt $ \vec{E} $ wird als Lichtweg gespeichert und später visualisiert.
 Aus der Kollision mit dem Hindernis und dem entsprechenden Material können weitere Lichtstrahlen resultieren. 
