@@ -1,18 +1,64 @@
 \chapter{Aufbau}
+Im Folgenden wird der Aufbau der Simulation zunächst theoretisch und abstrahiert betrachtet. 
+Folgende Notation soll jedoch eine Verknüpfung mit dem Quellcode vereinfachen: \code{Name im Quellcode}
+
+\section{Welt}
+Die Welt \code{World} ist der Grundstein für die Simulation. 
+Zu diesem virtuellen zweidimensionalen Raum können sämtliche Entitäten hinzugefügt werden. 
+Hier werden diese verwaltet, verarbeitet und zur Visualisierung ausgegeben. 
+
 \section{Lichtstrahl}
 In der geometrischen Optik geht man bei einem Lichtstrahl \code{Ray} 
 von einem Strahl aus, der sich von einem Ursprung $ A $  
 geradlinig in eine Richtung mit dem Winkel 
 $ \alpha $ ausbreitet. \parencite[vgl.][S. 1041]{tipler2015physik} mathematisch 
 wird dieser als Halbgerade angesehen $ \overrightarrow{AB} $. 
-Da der Punkt $ B $ für die Simulation keinen Nutzen hat, ist es 
-sinnvoll den Startpunkt als Ortsvektor $ \vec{O} $ \code{origin} innerhalb der Welt
+In der Simulation ist es sinnvoll lediglich den Startpunkt als Ortsvektor $ \vec{O} $ \code{origin} innerhalb der Welt
 und den Winkel \code{angle}, in den der Strahl ausgeht direkt zu speichern. 
 
 \section{Lichtweg}
 Es muss davon ausgegangen werden, dass ein Lichtstrahl in der 
-Simulation durch die Kollision mit anderen Objekten seine Richtung verändert. 
+die Kollision mit anderen Objekten seine Richtung verändert. 
 Ab einer Richtungsänderung wird der bisherige Lichtstrahl als Lichtweg \code{Line} 
 gespeichert, um in später zu visualisieren.
 Hierbei besteht ein Lichtstrahl aus den Ortsvektoren $ \vec{O} $ \code{origin} dem 
 Ursprung des Lichtstrahls und $ \vec{E} $ \code{end} dem Punkt der Kollision.
+
+\section{Hindernis}
+Bei allen Entitäten in der Welt, die nicht Strahl oder Lichtweg sind, 
+handelt es sich um Hindernisse. 
+Dieser definieren sich durch ihre geometrische Form und Position in der Welt 
+und können von Lichtstrahlen getroffen werden.
+Es sind verschiedene Variationen möglich. Jedes Hindernis \code{Obstacle} 
+hat jedoch einen Startpunkt als Ortsvektor $ \vec{A} $ \code{start} in der Welt. 
+Und ein Material \code{material} (vgl. \ref{material}). 
+Folgende Typen wurden für diese Arbeit ausgewählt, eine Erweiterung ist jedoch einfach möglich: 
+
+\subsection{Kreis}
+Der Kreis \code{type: 'cirlce'} hat eine zusätzliche Angabe über den Radius $ r $ \code{radius}.
+
+\subsection{Linie}
+Neben einen Anfangspunkt hat die Linie \code{type: 'line'} auch einen Ortsvektor $ \vec{B} $ als Endpunkt. 
+
+\subsection{Kurve}
+Zusätzlich kann ein Hindernis auch eine Kurve \code{type: 'curve'} sein. 
+Das ermöglicht die Konstruktion verschiedener besonderer Reflektoren (z. B. Parabolischer Reflektor).
+Für den Verlauf der Kurve besitzt dieser Hindernis-Typ eine Funktion $ f $. 
+Im Umfang dieser Arbeit wird bewusst auf eine vollständige und genaue Darstellung eines Graphen verzichtet. 
+Daher werden nur Punkte in einem Interval $ [-40, 40] $ im Abstand von einer übergebene Skalierung $ k $ \code{scale} errechnet, 
+als Linien verbunden und als diese im Weiteren behandelt. 
+Diese Vereinfachung kommt dennoch zu genauen Ergebnissen, während gleichzeitig der Umfang stark reduziert wird.
+Um eine Kurve beliebig in der Welt zu positionieren, kann ihr zusätzlich eine Winkel $ \gamma $ \code{rotation} übergeben werden, 
+der alle Punkte auf Kurve rotiert.
+
+
+\section{Material}
+\label{material}
+Die Existenz eines Materials \code{Material} in der Welt besteht nur in der Verknüpfung zu einem Hindernis. 
+Ein Material ist für die Verarbeitung eines einfallenden, mit dem Hindernis kollidierenden, Lichtstrahls verantwortlich 
+und kann eine beliebig Anzahl an neuen Lichtstrahlen zurückgeben. \\ 
+In dieser Arbeit wird nur die Reflexion bei dem Material Spiegel \code{mirror} behandelt. 
+Eine Trennung von Material und Hindernis ermöglicht jedoch eine einfache Erweiterung.
+Dabei können trotz Veränderung der strahlenoptischer Funktion, die geometrischen Eigenschaften beibehalten werden.
+So könnte beispielsweise ein Kreis einerseits als Spiegel die Lichtstrahlen reflektieren 
+und anderseits als Glas die Lichtstrahlen brechen. Ohne das dafür die Veränderung des Hindernisses von Nöten wäre.
