@@ -262,7 +262,6 @@ const getReflectedRayOnCircle = (collisionPoint: Pt, circleCenter: Pt): Readonly
 \chapter*{Zusatz: Komplexe Umgebungen}
 Im Folgenden sollen komplexere Umgebungen und deren Resultat in der Simulation demonstriert werden. 
 Weitere interaktive Beispiele sind online\footnote{https://optics.b3n.gg} aufzufinden.
-\newpage
 \subsection*{Parabolischer Reflektor}
 Bei einem parabolischen Reflektor handelt es sich um einen Konkavspiegel. \parencite[vgl.][S. 362]{kuchling2004taschenbuch}.
 Senkrecht einfallende Strahlen werden hierbei zu einem Brennpunkt reflektiert. 
@@ -274,22 +273,15 @@ Senkrecht einfallende Strahlen werden hierbei zu einem Brennpunkt reflektiert.
 export const parabolic: Scene = (space) => {
     const form = space.getForm();
     const world = createWorld();
-
     for (let i = 0; i < 10; i++) {
         world.addSource('ray' + i, createRay(new Pt(500 + 40 * i, 0), Math.PI * 2.5));
     }
-
     world.addObstacle(
         'reflector',
         createCurve(new Pt(480 + 5 * 40, 500), { f: (x) => (x / 10) ** 2, scale: 6, material: mirror })
     );
-
     world.update();
-    space.add(() => {
-        world.draw(form);
-    });
-
-    space.playOnce();
+    space.add(() => world.draw(form)).playOnce();
 };
 \end{verbnobox}
 
