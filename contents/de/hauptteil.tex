@@ -1,6 +1,23 @@
 \chapter{Aufbau}
 Im Folgenden wird der Aufbau der Simulation zunächst theoretisch und abstrahiert betrachtet. 
 Folgende Notation soll jedoch eine Verknüpfung mit dem Quellcode vereinfachen: \code{Name im Quellcode}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[node distance=2.5cm, every node/.style={fill=white, draw=black}, align=center, minimum width=4cm, minimum height=1cm, text centered]
+        \node(world)[rectangle]{Welt};
+        \node(ray)[rectangle, below of=world]{Lichtstrahl};
+        \node(line)[rectangle, below of=ray]{Lichtweg};
+        \node(obstacle)[rectangle, right of=ray, xshift=4cm]{Hindernis};
+        \node(material)[rectangle, below of=obstacle]{Material};
+
+        \draw[->] (world) -- (ray);
+        \draw[->] (world) -- (obstacle);
+        \draw[->] (ray) -- (line);
+        \draw[->] (obstacle) -- (material);
+    \end{tikzpicture}
+    \caption{Schematischer Aufbau der Simulation \\ Quelle: Eigene Darstellung}
+    \label{m1}
+\end{figure}
 
 \section{Welt}
 Die Welt \code{World} ist der Grundstein für die Simulation. 
@@ -32,7 +49,7 @@ und können von Lichtstrahlen getroffen werden.
 Es sind verschiedene Variationen möglich. Jedes Hindernis \code{Obstacle} 
 hat jedoch einen Startpunkt als Ortsvektor $ \vec{A} $ \code{start} in der Welt. 
 Und ein Material \code{material} (vgl. \ref{material}). 
-Folgende Typen wurden für diese Arbeit ausgewählt, eine Erweiterung ist jedoch einfach möglich: 
+Folgende Typen wurden für diese Arbeit ausgewählt, eine Erweiterung ist jedoch möglich: 
 
 \subsection{Kreis}
 Der Kreis \code{type: 'cirlce'} hat eine zusätzliche Angabe über den Radius $ r $ \code{radius}.
@@ -44,12 +61,13 @@ Neben einen Anfangspunkt hat die Linie \code{type: 'line'} auch einen Ortsvektor
 Zusätzlich kann ein Hindernis auch eine Kurve \code{type: 'curve'} sein. 
 Das ermöglicht die Konstruktion verschiedener besonderer Reflektoren (z. B. Parabolischer Reflektor).
 Für den Verlauf der Kurve besitzt dieser Hindernis-Typ eine Funktion $ f $. 
+Um eine Kurve beliebig in der Welt zu positionieren, kann ihr zusätzlich eine Winkel $ \gamma $ \code{rotation} übergeben werden, 
+der alle Punkte auf Kurve relative zum Ursprung rotiert. \\
 Im Umfang dieser Arbeit wird bewusst auf eine vollständige und genaue Darstellung eines Graphen verzichtet. 
 Daher werden nur Punkte in einem Interval $ [-40, 40] $ im Abstand von einer übergebene Skalierung $ k $ \code{scale} errechnet, 
-als Linien verbunden und als diese im Weiteren behandelt. 
-Diese Vereinfachung kommt dennoch zu genauen Ergebnissen, während gleichzeitig der Umfang stark reduziert wird.
-Um eine Kurve beliebig in der Welt zu positionieren, kann ihr zusätzlich eine Winkel $ \gamma $ \code{rotation} übergeben werden, 
-der alle Punkte auf Kurve rotiert.
+als Linien verbunden und als diese Fortlaufend verarbeitet. 
+Diese Annäherung ist ausreichend, während gleichzeitig der Umfang stark reduziert wird.
+
 
 
 \section{Material}
@@ -62,3 +80,4 @@ Eine Trennung von Material und Hindernis ermöglicht jedoch eine einfache Erweit
 Dabei können trotz Veränderung der strahlenoptischer Funktion, die geometrischen Eigenschaften beibehalten werden.
 So könnte beispielsweise ein Kreis einerseits als Spiegel die Lichtstrahlen reflektieren 
 und anderseits als Glas die Lichtstrahlen brechen. Ohne das dafür die Veränderung des Hindernisses von Nöten wäre.
+
