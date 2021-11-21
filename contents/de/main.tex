@@ -11,13 +11,15 @@
 % Packages
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{graphicx}
 \usepackage{blindtext}
 \usepackage{titlesec}
 \usepackage{mathtools}
 \usepackage{tikz}
 \usepackage{verbatimbox}
 \usepackage[backend=bibtex, style=authoryear]{biblatex}
+
+\usepackage{graphicx}
+\graphicspath{ {./assets/} }
 
 % Bib ref
 \addbibresource{ref.bib}
@@ -48,8 +50,6 @@
    \include{einleitung.tex}
    \include{hauptteil.tex}
    \include{fazit.tex}
-
-   Test \parencite[vgl.][S. 15]{hering2017optik}
 
    \printbibliography
 \end{document}
