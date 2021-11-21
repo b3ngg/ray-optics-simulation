@@ -38,17 +38,17 @@ Es muss davon ausgegangen werden, dass ein Lichtstrahl in der
 die Kollision mit anderen Objekten seine Richtung verändert. 
 Ab einer Richtungsänderung wird der bisherige Lichtstrahl als Lichtweg \code{Line} 
 gespeichert, um in später zu visualisieren.
-Hierbei besteht ein Lichtstrahl aus den Ortsvektoren $ \vec{O} $ \code{origin} dem 
-Ursprung des Lichtstrahls und $ \vec{E} $ \code{end} dem Punkt der Kollision.
+Hierbei besteht ein Lichtstrahl aus den Ortsvektoren $ \vec{O} $ \code{origin}, dem 
+Ursprung des Lichtstrahls und $ \vec{E} $ \code{end}, dem Punkt der Kollision.
 
 \section{Hindernis}
 Bei allen Entitäten in der Welt, die nicht Strahl oder Lichtweg sind, 
 handelt es sich um Hindernisse. 
-Dieser definieren sich durch ihre geometrische Form und Position in der Welt 
+Diese definieren sich durch ihre geometrische Form und Position in der Welt 
 und können von Lichtstrahlen getroffen werden.
 Es sind verschiedene Variationen möglich. Jedes Hindernis \code{Obstacle} 
-hat jedoch einen Startpunkt als Ortsvektor $ \vec{A} $ \code{start} in der Welt. 
-Und ein Material \code{material} (vgl. \ref{material}). 
+hat jedoch einen Startpunkt als Ortsvektor $ \vec{A} $ \code{start} in der Welt
+und ein Material \code{material} (vgl. \ref{material}). 
 Folgende Typen wurden für diese Arbeit ausgewählt: 
 
 \subsection{Kreis}
@@ -61,11 +61,12 @@ Neben einen Anfangspunkt hat die Linie \code{type: 'line'} auch einen Ortsvektor
 Zusätzlich kann ein Hindernis auch eine Kurve \code{type: 'curve'} sein. 
 Das ermöglicht die Konstruktion verschiedener besonderer Reflektoren (z. B. Parabolischer Reflektor).
 Für den Verlauf der Kurve besitzt dieser Hindernis-Typ eine Funktion $ f $. 
-Um eine Kurve beliebig in der Welt zu positionieren, kann ihr zusätzlich eine Winkel $ \gamma $ \code{rotation} übergeben werden, 
-der alle Punkte auf Kurve relative zum Ursprung rotiert. \\
+Um eine Kurve beliebig in der Welt zu positionieren, kann 
+ihr zusätzlich einen Winkel $ \gamma $ \code{rotation} übergeben werden, 
+der alle Punkte auf der Kurve, relativ zum Ursprung, rotiert. \\
 Im Umfang dieser Arbeit wird bewusst auf eine vollständige und genaue Darstellung eines Graphen verzichtet. 
-Daher werden nur Punkte in einem Interval $ [-40, 40] $ im Abstand von einer übergebene Skalierung $ k $ \code{scale} errechnet, 
-als Linien verbunden und als diese Fortlaufend verarbeitet. 
+Daher werden nur Punkte in einem Interval $ [-40, 40] $ im Abstand von einer übergebenen Skalierung $ k $ \code{scale} errechnet, 
+als Linien verbunden und als diese fortlaufend verarbeitet. 
 Diese Annäherung ist ausreichend, während gleichzeitig der Umfang stark reduziert wird.
 
 
@@ -73,21 +74,21 @@ Diese Annäherung ist ausreichend, während gleichzeitig der Umfang stark reduzi
 \label{material}
 Die Existenz eines Materials \code{Material} in der Welt besteht nur in der Verknüpfung zu einem Hindernis. 
 Ein Material ist für die Verarbeitung eines einfallenden, mit dem Hindernis kollidierenden, Lichtstrahls verantwortlich 
-und kann eine beliebig Anzahl an neuen Lichtstrahlen zurückgeben. \\ 
+und kann eine beliebige Anzahl an neuen Lichtstrahlen zurückgeben. \\ 
 In dieser Arbeit wird nur die Reflexion bei dem Material Spiegel \code{mirror} behandelt. 
 Eine Trennung von Material und Hindernis ermöglicht jedoch eine einfache Erweiterung.
-Dabei können trotz Veränderung der strahlenoptischer Funktion, die geometrischen Eigenschaften beibehalten werden.
+Dabei können, trotz Veränderung der strahlenoptischer Funktion, die geometrischen Eigenschaften beibehalten werden.
 So könnte beispielsweise ein Kreis einerseits als Spiegel die Lichtstrahlen reflektieren 
-und anderseits als Glas die Lichtstrahlen brechen. Ohne das dafür die Veränderung des Hindernisses von Nöten wäre.
+und anderseits als Glas die Lichtstrahlen brechen; ohne das dafür die Veränderung des Hindernisses von Nöten wäre.
 
 
 \chapter{Technische Voraussetzungen}
 Um die Zugänglichkeit der Simulation zu erhöhen, wird diese als Web-App programmiert. 
 Dazu wird die Programmiersprache TypeScript benutzt und die Applikation wird mit dem Framework „SvelteKit“\footnote{https://kit.svelte.dev} kompiliert.
 Zur Visualisierung wird die Library „Pts“\footnote{https://ptsjs.org} verwendet. Diese ermöglicht eine einfache Verwendung der Canvas-API. 
-Zusätzlich werden aber auch einige mathematisch Hilfsfunktionen von dieser Library verwendet.
+Zusätzlich werden aber auch einige mathematische Hilfsfunktionen von dieser Library verwendet.
 
-Der gesamte Quellcode für die Simulation ist auf GitHub aufzufinden\footnote{https://github.com/b3ngg/ray-optics-simulation}. 
+Der gesamte Quellcode für die Simulation ist auf GitHub zu finden\footnote{https://github.com/b3ngg/ray-optics-simulation}. 
 Im Folgenden werden nur kleine, unvollständige Ausschnitte aus dem Code eingebunden. 
 Die fertige Web-App ist ebenfalls als Website aufrufbar\footnote{https://optics.b3n.gg}.
 
@@ -102,9 +103,9 @@ Ursprung links oben hat und die y-Achse umgekehrt ist) beginnender und diagonal 
 unten strahlender Lichtstrahl hinzugefügt. \\
 Zudem wird auch ein Hindernis in der Form einer vertikalen Linie in der Mitte der Szene hinzugefügt. 
 Diese hat das Material Spiegel \code{mirror}. \\ 
-Nun wird mit \texttt{world.update()} die Simulation aktualisiert und die Lichtwege berechnet. Dieser werden zum Schluss visualisiert.
+Nun wird mit \texttt{world.update()} die Simulation aktualisiert und die Lichtwege berechnet. Diese werden zum Schluss visualisiert.
 
-Bei dem Objekt \texttt{space} handelt es sich um ein von Pts bereitgestellte und zur Visualisierung benötigte Objekt. 
+Bei dem Objekt \texttt{space} handelt es sich um ein von Pts bereitgestellte und zur Visualisierung benötigtes Objekt. 
 Die Klasse \texttt{Pt} ist ebenfalls Teil von Pts und wird zur Vektormathematik verwendet.
 \newpage
 
@@ -192,7 +193,7 @@ Demnach ist der Betrag des Einfallswinkels $ \varepsilon $ relative zum Lot der 
     \caption{Reflexion eines Lichtstrahls an einer Linie in der Simulation  \\ Quelle: Eigene Darstellung}
 
 \end{figure}
-Es gilt daher zunächst den Lot der Linie zu berechnen. Das Lot ist orthogonal zur Linie. 
+Es gilt daher zunächst das Lot der Linie zu berechnen. Das Lot ist orthogonal zur Linie. 
 Es kann berechnet werden, indem der Vektor der Linie in zwei Teile zerlegt wird. \parencite[vgl.][S. 1]{greve2006raytracing}
 
 \begin{verbnobox}[\scriptsize\mbox{}]
@@ -240,7 +241,7 @@ Wobei bei einem Kreis Folgendes gilt:
     \label{circlereflexion}
     \vec{R} = \vec{E} - \vec{M}
 \end{equation}
-Um Gleichung \ref{circlereflexion} zu implementiert genügt lediglich folgender Quellcode:
+Um Gleichung \ref{circlereflexion} zu implementieren genügt lediglich folgender Quellcode:
 
 \begin{verbnobox}[\scriptsize\mbox{}]
 /** Calculates the reflected ray of an incoming ray on a circle */
@@ -296,7 +297,7 @@ export const parabolic: Scene = (space) => {
     \centering
     \includegraphics[width=\textwidth]{parabolic.png}
 
-    \caption{Reflexion mehrere Lichtstrahlen an einem parabolischen Reflektor  \\ Quelle: Eigene Darstellung}
+    \caption{Reflexion mehrerer Lichtstrahlen an einem parabolischen Reflektor  \\ Quelle: Eigene Darstellung}
 
 \end{figure}
 \newpage
