@@ -17,6 +17,9 @@ const config = {
 		target: '#svelte',
 		adapter: adapter(),
 		router: false,
+		files: {
+			assets: 'contents'
+		},
 		vite: {
 			resolve: {
 				alias: {
