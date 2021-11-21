@@ -49,7 +49,7 @@ und können von Lichtstrahlen getroffen werden.
 Es sind verschiedene Variationen möglich. Jedes Hindernis \code{Obstacle} 
 hat jedoch einen Startpunkt als Ortsvektor $ \vec{A} $ \code{start} in der Welt. 
 Und ein Material \code{material} (vgl. \ref{material}). 
-Folgende Typen wurden für diese Arbeit ausgewählt, eine Erweiterung ist jedoch möglich: 
+Folgende Typen wurden für diese Arbeit ausgewählt: 
 
 \subsection{Kreis}
 Der Kreis \code{type: 'cirlce'} hat eine zusätzliche Angabe über den Radius $ r $ \code{radius}.
@@ -93,18 +93,18 @@ Die fertige Web-App ist ebenfalls als Website aufrufbar\footnote{https://optics.
 
 
 \chapter{Simulationsprozess}
-Im Folgenden wird nun der Ablauf der Simulation vom erstellen der Szene bis hin zum Visualisieren des Resultats beschrieben.
+Im Folgenden wird nun der Ablauf der Simulation vom Erstellen der Szene bis hin zum Visualisieren des Resultats beschrieben.
 
 \section{Erzeugen der Welt}
 Zunächst muss für die Simulation eine Umgebung errichtet werden. Dazu wird eine Welt erstellt.
 Zu dieser werden in dieser Szene ein von links oben (man beachte, dass das Koordinatensystem den 
-Ursprung links oben hat und die y-Achse umgekehrt zum normalen Koordinatensystem ist) beginnender und diagonal nach rechts 
+Ursprung links oben hat und die y-Achse umgekehrt ist) beginnender und diagonal nach rechts 
 unten strahlender Lichtstrahl hinzugefügt. \\
 Zudem wird auch ein Hindernis in der Form einer vertikalen Linie in der Mitte der Szene hinzugefügt. 
 Diese hat das Material Spiegel \code{mirror}. \\ 
 Nun wird mit \texttt{world.update()} die Simulation aktualisiert und die Lichtwege berechnet. Dieser werden zum Schluss visualisiert.
 
-Bei den Objekt \texttt{space} handelt es sich um ein von Pts bereitgestellte und zur Visualisierung benötigte Objekt. 
+Bei dem Objekt \texttt{space} handelt es sich um ein von Pts bereitgestellte und zur Visualisierung benötigte Objekt. 
 Die Klasse \texttt{Pt} ist ebenfalls Teil von Pts und wird zur Vektormathematik verwendet.
 \newpage
 
@@ -134,10 +134,10 @@ export const lineReflection: Scene = (space) => {
 \section{Berechnung des Lichtwegs}
 Bei der Berechnung eines Lichtwegs startet die Simulation nur mit einem Ausgangs-Lichtstrahl.
 Zunächst muss die erste Überschneidung des Strahls mit einem Hindernis bestimmt werden. 
-Für die Bestimmung des Schnittpunktes werden die üblichen Verfahren der Euklidischen Geometrie benutzt. 
+Für die Bestimmung des Schnittpunktes werden die üblichen Verfahren der euklidischen Geometrie benutzt. 
 Die Funktionen dafür werden von Pts bereitgestellt und sollen hier nicht weiter vertieft werden. \\ 
-Der Weg von $ \vec{O} $ des Lichtstrahls bis zum Schnittpunkt $ \vec{E} $ wird dann als Lichtweg gespeichert und später visualisiert.
-Aus der Kollision mit dem Hindernis und dem entsprechenden Material können dann weitere Lichtstrahlen resultieren. 
+Der Weg von $ \vec{O} $ des Lichtstrahls bis zum Schnittpunkt $ \vec{E} $ wird als Lichtweg gespeichert und später visualisiert.
+Aus der Kollision mit dem Hindernis und dem entsprechenden Material können weitere Lichtstrahlen resultieren. 
 Diese Lichtstrahlen durchlaufen den gleichen Prozess wie der erste Lichtstrahl. 
 Daher wird die Funktion als rekursive Funktion verwendet und mit den jeweils neuen Lichtstrahlen erneut aufgerufen.
 
@@ -181,8 +181,7 @@ Hierbei gilt das Fermat’sche-Prinzip \parencite[vgl.][S. 20]{hering2017optik}.
 
 \subsection*{An einer Linie}
 Das Hindernis der Linie kann als eine ebene Grenzfläche angenommen werden. 
-Demnach ist der Betrag des Einfallswinkel $ \varepsilon $ relative zum Lot der Grenzfläche gleich mit dem Reflexionswinkel $ \varepsilon_r $. 
-
+Demnach ist der Betrag des Einfallswinkels $ \varepsilon $ relative zum Lot der Grenzfläche gleich mit dem Reflexionswinkel $ \varepsilon_r $. 
 \begin{equation}
     -\varepsilon = \varepsilon_r
 \end{equation}
@@ -231,7 +230,7 @@ const getReflectedRayOnLine = (
 
 \subsection*{An einem Kreis}
 Ein Kreis kann als Konvexspiegel mit dem Mittelpunkt $ M $ und dem Brennpunkt $ F $ angesehen werden. \parencite[vgl.][S. 362]{kuchling2004taschenbuch}
-Wobei bei einem Kreis folgendes gilt: 
+Wobei bei einem Kreis Folgendes gilt: 
 \begin{equation}
     \label{mequalf}
     M = F
@@ -264,7 +263,7 @@ Im Folgenden sollen komplexere Umgebungen und deren Resultat in der Simulation d
 Weitere interaktive Beispiele sind online\footnote{https://optics.b3n.gg} aufzufinden.
 \newpage
 \subsection*{Parabolischer Reflektor}
-Bei einer parabolischen Reflektor handelt es sich um einen Konkavspiegel. \parencite[vgl.][S. 362]{kuchling2004taschenbuch}.
+Bei einem parabolischen Reflektor handelt es sich um einen Konkavspiegel. \parencite[vgl.][S. 362]{kuchling2004taschenbuch}.
 Senkrecht einfallende Strahlen werden hierbei zu einem Brennpunkt reflektiert. 
 
 \begin{verbnobox}[\scriptsize\mbox{}]
@@ -302,7 +301,7 @@ export const parabolic: Scene = (space) => {
 \end{figure}
 \newpage
 
-\subsection*{Reflexion an Kreisen}
+\subsection*{Feld von Kreisen}
 Bei einer großen Anzahl an Kreisen entwickeln sich sehr schnell viele Reflexionen. Eine Art Stress-Test für die Simulation.
 \begin{verbnobox}[\scriptsize\mbox{}]
 export const circleChaos: Scene = (space) => {
