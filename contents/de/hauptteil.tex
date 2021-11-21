@@ -89,7 +89,7 @@ Zusätzlich werden aber auch einige mathematisch Hilfsfunktionen von dieser Libr
 
 Der gesamte Quellcode für die Simulation ist auf GitHub aufzufinden\footnote{https://github.com/b3ngg/ray-optics-simulation}. 
 Im Folgenden werden nur kleine, unvollständige Ausschnitte aus dem Code eingebunden. 
-Die fertige Web-App ist ebenfalls als Website aufrufbar\footnote{https://ray-optics.netlify.app}.
+Die fertige Web-App ist ebenfalls als Website aufrufbar\footnote{https://optics.b3n.gg}.
 
 
 \chapter{Simulationsprozess}
@@ -260,5 +260,72 @@ const getReflectedRayOnCircle = (collisionPoint: Pt, circleCenter: Pt): Readonly
 \end{figure}
 
 \chapter*{Zusatz: Komplexe Umgebungen}
-Im folgenden sollen komplexere Umgebungen und deren Resultat in der Simulation demonstriert werden. 
-Weitere interaktive Beispiele sind online\footnote{https://ray-optics.netlify.app} aufzufinden.
+Im Folgenden sollen komplexere Umgebungen und deren Resultat in der Simulation demonstriert werden. 
+Weitere interaktive Beispiele sind online\footnote{https://optics.b3n.gg} aufzufinden.
+\newpage
+\subsection*{Parabolischer Reflektor}
+Bei einer parabolischen Reflektor handelt es sich um einen Konkavspiegel. \parencite[vgl.][S. 362]{kuchling2004taschenbuch}.
+Senkrecht einfallende Strahlen werden hierbei zu einem Brennpunkt reflektiert. 
+
+\begin{verbnobox}[\scriptsize\mbox{}]
+/**
+* Reflections of multiple rays on a parabolic reflector
+*/
+export const parabolic: Scene = (space) => {
+    const form = space.getForm();
+    const world = createWorld();
+
+    for (let i = 0; i < 10; i++) {
+        world.addSource('ray' + i, createRay(new Pt(500 + 40 * i, 0), Math.PI * 2.5));
+    }
+
+    world.addObstacle(
+        'reflector',
+        createCurve(new Pt(480 + 5 * 40, 500), { f: (x) => (x / 10) ** 2, scale: 6, material: mirror })
+    );
+
+    world.update();
+    space.add(() => {
+        world.draw(form);
+    });
+
+    space.playOnce();
+};
+\end{verbnobox}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{parabolic.png}
+
+    \caption{Reflexion mehrere Lichtstrahlen an einem parabolischen Reflektor  \\ Quelle: Eigene Darstellung}
+
+\end{figure}
+\newpage
+
+\subsection*{Reflexion an Kreisen}
+Bei einer großen Anzahl an Kreisen entwickeln sich sehr schnell viele Reflexionen. Eine Art Stress-Test für die Simulation.
+\begin{verbnobox}[\scriptsize\mbox{}]
+export const circleChaos: Scene = (space) => {
+    const form = space.getForm();
+    const world = createWorld();
+    space.add({
+        start: (bound) => {
+            const pts = Create.distributeRandom(bound, 30);
+            pts.forEach((pt, i) => {
+                world.addObstacle('circle' + i, createCircle(pt, { material: mirror, radius: 60 }));
+            });
+
+            world.addSource('dynamic-ray', createRay(space.center, Const.pi));
+        }
+    });
+    space.playOnce();
+};
+\end{verbnobox}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{chaos.png}
+
+    \caption{Reflexion eines Lichtstrahls an vielen Kreisen \\ Quelle: Eigene Darstellung}
+
+\end{figure}
