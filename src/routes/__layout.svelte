@@ -7,6 +7,7 @@
 
 <div class="h-screen w-screen bg-black text-white flex flex-col">
 	<menu class="flex items-center justify-between px-6">
+		<a href="/" class="font-medium hover:underline {!$page.params['i'] && 'underline'}"> Home </a>
 		{#each Object.keys(scenes) as key, i}
 			<a
 				href="/scene/{i}"

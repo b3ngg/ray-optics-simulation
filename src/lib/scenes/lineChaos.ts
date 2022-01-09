@@ -5,10 +5,7 @@ import { createRay } from '$lib/ray';
 import { createWorld } from '$lib/world';
 import { Const, Create, Num, Pt } from 'pts';
 
-/**
- * Placeholder scene
- */
-export const start: Scene = (space) => {
+export const lineChaos: Scene = (space) => {
 	const form = space.getForm();
 
 	const world = createWorld();
