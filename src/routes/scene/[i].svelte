@@ -40,8 +40,28 @@
 <SceneRenderer {scene} />
 
 <div
-	class="bg-black bg-opacity-50 transform backdrop-blur-xl lg:fixed right-0 bottom-0 w-full max-w-3xl p-10 pb-0 lg:rounded-tl-lg border-white border-t lg:border-l"
+	class="bg-black bg-opacity-50 transform backdrop-blur-xl xl:fixed right-0 bottom-0 w-full xl:max-w-3xl p-10 pb-0 xl:rounded-tl-lg border-white border-t xl:border-l"
 >
+	<a href="/" class="font-bold flex pb-4 text-gray-200 transition hover:opacity-50">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			class="icon icon-tabler icon-tabler-arrow-left mr-2"
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			stroke-width="2"
+			stroke="currentColor"
+			fill="none"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		>
+			<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+			<line x1="5" y1="12" x2="19" y2="12" />
+			<line x1="5" y1="12" x2="11" y2="18" />
+			<line x1="5" y1="12" x2="11" y2="6" />
+		</svg>
+		Back to start
+	</a>
 	<article class="prose prose-invert lg:prose-lg">
 		<h1>{title}</h1>
 		<p class="lead">
