@@ -111,7 +111,7 @@
 			</div>
 		{/if}
 
-		<div class="flex items-center space-x-3 cursor-pointer" on:click={() => location.reload()}>
+		<div class="flex items-center space-x-3">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="scale-105"
