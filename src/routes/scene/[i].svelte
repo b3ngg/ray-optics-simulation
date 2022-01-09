@@ -1,10 +1,20 @@
+<script lang="ts" context="module">
+	export const load: Load = async ({ params }) => {
+		return {
+			props: {
+				sceneIndex: params.i
+			}
+		};
+	};
+</script>
+
 <script lang="ts">
-	import { page } from '$app/stores';
-
-	import Renderer from '$components/Renderer.svelte';
+	import type { Load } from '@sveltejs/kit';
 	import { scenes } from '$lib/scenes';
+	import Renderer from '$components/Renderer.svelte';
 
-	const scene = Object.values(scenes)[$page.params['i']];
+	export let sceneIndex: number;
+	const scene = Object.values(scenes)[sceneIndex];
 </script>
 
 <Renderer {scene} />

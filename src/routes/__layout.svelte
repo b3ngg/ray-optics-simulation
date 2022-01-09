@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 	import { scenes } from '$lib/scenes';
 
 	import '../app.css';
@@ -17,7 +17,9 @@
 		{/each}
 	</menu>
 	<div class="w-full h-full">
-		<slot />
+		{#if !$navigating}
+			<slot />
+		{/if}
 	</div>
 	<footer class="p-2 px-4 flex justify-between items-center">
 		<a
