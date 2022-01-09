@@ -1,4 +1,5 @@
 import type { Scene } from '$types/Scene';
+import { basic } from './basic';
 import { circleChaos } from './circleChaos';
 import { parabolic } from './parabolic';
 
@@ -11,6 +12,12 @@ export interface SceneInfo {
 }
 
 export const scenes: SceneInfo[] = [
+	{
+		title: 'Basic shapes',
+		scene: basic,
+		content: 'See how the light ray reflects on circles and lines of different sizes.',
+		inputBased: true
+	},
 	{
 		title: 'Circle Chaos',
 		scene: circleChaos,
