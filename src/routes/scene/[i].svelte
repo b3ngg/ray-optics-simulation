@@ -24,7 +24,7 @@
 	import type { Scene } from '$types/Scene';
 	import snarkdown from 'snarkdown';
 	import { SceneInfo, scenes } from '$lib/scenes';
-	import Renderer from '$components/Renderer.svelte';
+	import SceneRenderer from '$components/SceneRenderer.svelte';
 	import Button from '$components/Button.svelte';
 	import Footer from '$components/Footer.svelte';
 
@@ -34,7 +34,7 @@
 	export let randomized: boolean;
 </script>
 
-<Renderer {scene} />
+<SceneRenderer {scene} />
 
 <div
 	class="bg-black bg-opacity-50 transform backdrop-blur-2xl lg:fixed right-0 bottom-0 w-full max-w-3xl p-10 pb-0 lg:rounded-tl-lg border-white border-t lg:border-l"
