@@ -18,4 +18,6 @@
 	});
 </script>
 
-<canvas bind:this={canvas} />
+<div class="h-[80vh] lg:h-screen">
+	<canvas bind:this={canvas} />
+</div>
