@@ -14,13 +14,14 @@ export const scenes: SceneInfo[] = [
 	{
 		title: 'Circle Chaos',
 		scene: circleChaos,
-		content: '/circle-chaos.md',
+		content: 'When many circles are randomly arranged, complex behavior develops very quickly.',
 		randomized: true
 	},
 	{
 		title: 'Parabolic Reflector',
 		scene: parabolic,
-		content: '/parabolic-reflector.md',
+		content:
+			'Move your mouse (or touch the screen) to move the light rays. They will always hit on on point, because of the parabolic reflector.',
 		inputBased: true
 	}
 ];

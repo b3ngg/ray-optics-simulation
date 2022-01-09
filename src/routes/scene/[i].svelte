@@ -4,10 +4,8 @@
 		if (!sceneInfo) return;
 
 		const getHtml = async () => {
-			if (!sceneInfo.content) return null;
-			const response = await fetch(url.origin + sceneInfo.content);
-			const markdown = await response.text();
-			return snarkdown(markdown);
+			if (!sceneInfo.content) return 'null';
+			return snarkdown(sceneInfo.content);
 		};
 
 		return {
