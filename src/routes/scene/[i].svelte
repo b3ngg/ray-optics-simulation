@@ -12,6 +12,7 @@
 
 		return {
 			props: {
+				i: params.i,
 				...sceneInfo,
 				html: await getHtml()
 			}
@@ -28,6 +29,7 @@
 	import Button from '$components/Button.svelte';
 	import Footer from '$components/Footer.svelte';
 
+	export let i: number;
 	export let title: string;
 	export let scene: Scene;
 	export let html: string;
@@ -37,7 +39,7 @@
 <SceneRenderer {scene} />
 
 <div
-	class="bg-black bg-opacity-50 transform backdrop-blur-2xl lg:fixed right-0 bottom-0 w-full max-w-3xl p-10 pb-0 lg:rounded-tl-lg border-white border-t lg:border-l"
+	class="bg-black bg-opacity-50 transform backdrop-blur-xl lg:fixed right-0 bottom-0 w-full max-w-3xl p-10 pb-0 lg:rounded-tl-lg border-white border-t lg:border-l"
 >
 	<article class="prose prose-invert lg:prose-lg pb-10">
 		<h1>{title}</h1>
@@ -50,8 +52,16 @@
 		{/if}
 	</article>
 
-	<Button secondary>Previous scene</Button>
-	<Button>Next scene</Button>
+	{#if i > 0}
+		<a href="/scene/{+i - 1}">
+			<Button secondary>Previous scene</Button>
+		</a>
+	{/if}
+	{#if i < scenes.length - 1}
+		<a href="/scene/{+i + 1}">
+			<Button>Next scene</Button>
+		</a>
+	{/if}
 
 	<Footer />
 </div>

@@ -3,7 +3,7 @@
 	import { scenes } from '$lib/scenes';
 </script>
 
-<header class="fixed left-0 top-0 right-0 w-full backdrop-blur-2xl bg-black bg-opacity-60">
+<header class="fixed left-0 top-0 right-0 w-full backdrop-blur-xl bg-black bg-opacity-50">
 	<div class="mx-auto max-w-6xl">
 		<menu class="flex items-center justify-between p-4 px-10">
 			<a href="/" class="font-medium hover:underline {!$page.params['i'] && 'underline'}"> Home </a>
