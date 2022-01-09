@@ -7,6 +7,7 @@ export interface SceneInfo {
 	scene: Scene;
 	content?: string;
 	randomized?: boolean;
+	inputBased?: boolean;
 }
 
 export const scenes: SceneInfo[] = [
@@ -19,6 +20,7 @@ export const scenes: SceneInfo[] = [
 	{
 		title: 'Parabolic Reflector',
 		scene: parabolic,
-		content: '/parabolic-reflector.md'
+		content: '/parabolic-reflector.md',
+		inputBased: true
 	}
 ];
