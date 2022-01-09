@@ -51,7 +51,7 @@
 </script>
 
 <svelte:window on:keypress={onKey} />
-<div class="h-[85vh] xl:h-screen">
+<div class="h-[80vh] xl:h-screen">
 	{#if paused}
 		<div class="fixed left-0 top-0 w-full h-full flex items-center justify-center">
 			<svg

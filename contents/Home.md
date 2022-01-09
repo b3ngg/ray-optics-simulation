@@ -4,7 +4,7 @@
 A small fun/school project to simulate the reflection of a light ray in two-dimensional space. Easily expandable to support more shapes and materials. 
 </p>
 
-Currently, the simulation supports entities such as circles, lines, and (approximated) curves, each consisting of one material, there are two materials at the moment, but an extension is easily possible.
+Currently, the simulation supports entities such as circles, lines, and (approximated) curves, each consisting of one material, there is one material at the moment, but an extension is easily possible.
 
 The project is written in Typescript and visualized with [pts.js](https://ptsjs.org) in [Svelte](https://svelte.dev).
 
