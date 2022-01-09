@@ -44,10 +44,12 @@
 >
 	<article class="prose prose-invert lg:prose-lg">
 		<h1>{title}</h1>
-		{@html html}
+		<p class="lead">
+			{@html html}
+		</p>
 	</article>
 
-	<div class="flex flex-col py-8 space-y-2">
+	<div class="flex flex-col py-10 space-y-2">
 		{#if inputBased}
 			<div class="flex items-center space-x-3">
 				<svg

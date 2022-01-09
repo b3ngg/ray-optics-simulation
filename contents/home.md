@@ -8,6 +8,8 @@ Currently, the simulation supports entities such as circles, lines, and (approxi
 
 The project is written in Typescript and visualized with [pts.js](https://ptsjs.org) in [Svelte](https://svelte.dev).
 
+@@@
+
 ## Intro
 
 The physical principles of the reflection of light rays follow a simple logic.
