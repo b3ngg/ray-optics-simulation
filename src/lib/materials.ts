@@ -4,6 +4,25 @@ import type { Ray } from '$types/Ray';
 import { Pt, Vec } from 'pts';
 import { createRay } from './ray';
 
+/** Reflects all rays without loss or distortion  */
+export const mirror: Readonly<Material> = {
+	handleCollision: (intersection, collider, incoming, obstacle) => {
+		if (obstacle.type === 'line') {
+			return [getReflectedRayOnLine(incoming, collider, intersection)];
+		}
+
+		if (obstacle.type === 'circle') {
+			return [getReflectedRayOnCircle(intersection, obstacle.start)];
+		}
+
+		if (obstacle.type === 'curve') {
+			return [getReflectedRayOnLine(incoming, collider, intersection)];
+		}
+
+		return [];
+	}
+} as const;
+
 /** Calculate the normal point of a line */
 const getLineNormal = (line: PtIterable): Readonly<Pt> => {
 	const normalAngle = line[0].$subtract(line[1]).angle() + Math.PI / 2;
@@ -31,22 +50,3 @@ const getReflectedRayOnCircle = (collisionPoint: Pt, circleCenter: Pt): Readonly
 	const perpendicularAngle = collisionPoint.$subtract(circleCenter).angle();
 	return createRay(collisionPoint, perpendicularAngle);
 };
-
-/** Reflects all rays without loss or distortion  */
-export const mirror: Readonly<Material> = {
-	handleCollision: (intersection, collider, incoming, obstacle) => {
-		if (obstacle.type === 'line') {
-			return [getReflectedRayOnLine(incoming, collider, intersection)];
-		}
-
-		if (obstacle.type === 'circle') {
-			return [getReflectedRayOnCircle(intersection, obstacle.start)];
-		}
-
-		if (obstacle.type === 'curve') {
-			return [getReflectedRayOnLine(incoming, collider, intersection)];
-		}
-
-		return [];
-	}
-} as const;

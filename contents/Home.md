@@ -15,10 +15,11 @@ The paths of reflected light waves can be predicted almost intuitively
 can be predicted almost intuitively from simple geometric shapes. In
 a more complex environment with an increased number of physically
 relevant entities, the prediction of the totality of all effects on the
-effects on the light path will be increasingly difficult for humans to predict and
-increasingly difficult to predict and, above all, time-consuming. If
-even the initial effort for the digital implementation of these
+effects on the light path will be increasingly difficult for humans to predict and,
+above all, time-consuming. If even the initial effort for the digital implementation of these
 physical optical fundamentals of reflection may be greater, this is
 especially in mentioned more extensive situations, this is practicable and
 and allows fast iterations concerning the change of the result
 in connection with the initial situation.
+
+[Read the detailed work about the project (German only)](https://optics.b3n.gg/de/main.pdf)

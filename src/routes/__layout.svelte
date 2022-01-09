@@ -6,7 +6,7 @@
 </script>
 
 <div class="h-screen w-screen bg-black text-white flex flex-col">
-	<menu class="flex items-center justify-between px-6">
+	<menu class="flex items-center justify-between p-6">
 		<a href="/" class="font-medium hover:underline {!$page.params['i'] && 'underline'}"> Home </a>
 		{#each Object.keys(scenes) as key, i}
 			<a
@@ -17,7 +17,7 @@
 			</a>
 		{/each}
 	</menu>
-	<div class="w-full h-full">
+	<div class="w-full h-full overflow-auto">
 		{#if !$navigating}
 			<slot />
 		{/if}
