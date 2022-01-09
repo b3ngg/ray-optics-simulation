@@ -31,7 +31,7 @@
 				});
 			},
 			animate: (t) => {
-				sceneCallback(t);
+				if (typeof sceneCallback === 'function') sceneCallback(t, space.pointer);
 				world.update();
 				world.draw(form);
 			}

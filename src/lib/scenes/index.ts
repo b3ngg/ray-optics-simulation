@@ -1,5 +1,6 @@
 import type { Scene } from '$types/Scene';
 import { circleChaos } from './circleChaos';
+import { parabolic } from './parabolic';
 
 export interface SceneInfo {
 	title: string;
@@ -14,5 +15,10 @@ export const scenes: SceneInfo[] = [
 		scene: circleChaos,
 		content: '/circle-chaos.md',
 		randomized: true
+	},
+	{
+		title: 'Parabolic Reflector',
+		scene: parabolic,
+		content: '/parabolic-reflector.md'
 	}
 ];

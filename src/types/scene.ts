@@ -12,4 +12,4 @@ type SceneInput = {
 };
 
 /** A scene constructs and renders a different scenario */
-export type Scene = (input: SceneInput) => (t: number) => void;
+export type Scene = (input: SceneInput) => void | ((t: number, pointer: Pt) => void);
