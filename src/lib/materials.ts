@@ -12,7 +12,7 @@ export const mirror: Readonly<Material> = {
 		}
 
 		if (obstacle.type === 'circle') {
-			return [getReflectedRayOnCircle(intersection, obstacle.start)];
+			return [getReflectedRayOnCircle(incoming, intersection, obstacle.start)];
 		}
 
 		if (obstacle.type === 'curve') {
@@ -46,7 +46,17 @@ const getReflectedRayOnLine = (
 };
 
 /** Calculates the reflected ray of an incoming ray on a circle */
-const getReflectedRayOnCircle = (collisionPoint: Pt, circleCenter: Pt): Readonly<Ray> => {
-	const perpendicularAngle = collisionPoint.$subtract(circleCenter).angle();
-	return createRay(collisionPoint, perpendicularAngle);
+const getReflectedRayOnCircle = (
+	incidentRay: Ray,
+	collisionPoint: Pt,
+	circleCenter: Pt
+): Readonly<Ray> => {
+	const d = new Pt(1, 0).toAngle(incidentRay.angle);
+	const circleNormal = new Pt(0, 1).toAngle(collisionPoint.$subtract(circleCenter).angle());
+
+	const perpendicular = 2 * Vec.dot(d, circleNormal);
+	const reflection = Vec.subtract(d, Vec.multiply(circleNormal, perpendicular));
+	const r = new Pt(reflection);
+
+	return createRay(collisionPoint, r.angle());
 };
