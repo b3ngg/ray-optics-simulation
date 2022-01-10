@@ -38,7 +38,7 @@
 <SceneRenderer {scene} />
 
 <div
-	class="bg-black bg-opacity-50 transform backdrop-blur-xl xl:fixed right-0 bottom-0 w-full xl:max-w-3xl p-10 pb-0 xl:rounded-tl-lg border-white border-t xl:border-l"
+	class="bg-black bg-opacity-50 transform backdrop-blur-xl xl:fixed right-0 bottom-0 w-full xl:max-w-xl p-10 pb-0 xl:rounded-tl-lg border-white border-t xl:border-l"
 >
 	<a href="/" class="font-bold flex pb-4 text-gray-200 transition hover:opacity-50">
 		<svg
@@ -60,7 +60,7 @@
 		</svg>
 		Back to start
 	</a>
-	<article class="prose prose-invert lg:prose-lg">
+	<article class="prose prose-invert text-xs prose-xs">
 		<h1>{title}</h1>
 		<p class="lead">
 			{@html html}

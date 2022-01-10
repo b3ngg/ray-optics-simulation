@@ -9,7 +9,7 @@ export const rotation: Scene = ({ world, bounds, center, screen }) => {
 		world.addObstacle(
 			'line1',
 			createLine(new Pt(0.5, 0).$multiply(screen), {
-				end: bounds.bottomRight.rotate2D((t / 10000) * Const.two_pi),
+				end: new Pt(10.0, 0).$multiply(screen).rotate2D((t / 10000) * Const.two_pi),
 				material: mirror
 			})
 		);
@@ -17,7 +17,7 @@ export const rotation: Scene = ({ world, bounds, center, screen }) => {
 		world.addObstacle(
 			'line2',
 			createLine(new Pt(0.5, 0.8).$multiply(screen), {
-				end: bounds.bottomRight.rotate2D(-(t / 10000) * Const.two_pi),
+				end: new Pt(10.0, 0.8).$multiply(screen).rotate2D(-(t / 10000) * Const.two_pi),
 				material: mirror
 			})
 		);
@@ -25,7 +25,7 @@ export const rotation: Scene = ({ world, bounds, center, screen }) => {
 		world.addObstacle(
 			'line3',
 			createLine(new Pt(0.9, 0.5).$multiply(screen), {
-				end: bounds.bottomRight.rotate2D((t / 5000) * Const.two_pi),
+				end: new Pt(10.0, 0.5).$multiply(screen).rotate2D((t / 5000) * Const.two_pi),
 				material: mirror
 			})
 		);

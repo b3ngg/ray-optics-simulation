@@ -4,7 +4,7 @@ import { createRay } from '$lib/ray';
 import type { Scene } from '$types/Scene';
 import { Pt } from 'pts';
 
-export const basic: Scene = ({ world, screen, center }) => {
+export const basic: Scene = ({ world, screen, center, scale }) => {
 	world.addObstacle(
 		'line1',
 		createLine(new Pt(0.4, 0.2).$multiply(screen), {
@@ -25,7 +25,7 @@ export const basic: Scene = ({ world, screen, center }) => {
 		'circle1',
 		createCircle(new Pt(0.4, 0.8).$multiply(screen), {
 			material: mirror,
-			radius: 100
+			radius: scale / 50
 		})
 	);
 
@@ -33,7 +33,7 @@ export const basic: Scene = ({ world, screen, center }) => {
 		'circle2',
 		createCircle(new Pt(0.9, 0.55).$multiply(screen), {
 			material: mirror,
-			radius: 300
+			radius: scale / 5
 		})
 	);
 
