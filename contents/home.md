@@ -24,8 +24,6 @@ especially in mentioned more extensive situations, this is practicable and
 and allows fast iterations concerning the change of the result
 in connection with the initial situation.
 
-[Read the detailed work about the project (German only)](https://optics.b3n.gg/de/main.pdf)
-
 ## Structure
 
 ### World
