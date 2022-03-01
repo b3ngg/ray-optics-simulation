@@ -21,7 +21,7 @@
 		<span> GitHub </span>
 	</a>
 
-	<a target="_blank" href="https://twitter.com/b3n_gg" class="text-gray-300 hover:text-gray-400">
-		Made by Ben Weber
+	<a target="_blank" href="https://snuna.com/" class="text-gray-300 hover:text-gray-400">
+		Project by Snuna
 	</a>
 </footer>
